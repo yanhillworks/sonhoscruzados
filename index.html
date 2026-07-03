@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sonhos cruzados</title>
+  <title>Sonhos cruzados - Custom Organic Texturing Lab</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,88 +15,294 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #000;
+      background-color: #ffffff;
+      font-family: sans-serif;
+    }
+    #control-panel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid #ccc;
+      z-index: 1000;
+      width: 290px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .panel-section {
+      font-weight: bold; 
+      font-size: 13px; 
+      margin: 15px 0 8px 0; 
+      border-bottom: 1px solid #ddd; 
+      padding-bottom: 3px;
+      color: #111;
+    }
+    .control-group {
+      margin-bottom: 10px;
+    }
+    .control-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    .control-group input[type="range"] {
+      width: 100%;
+    }
+    .control-group input[type="color"] {
+      width: 50px;
+      height: 24px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+    .control-group span {
+      float: right;
+      font-weight: normal;
+      color: #666;
+    }
+    .color-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .color-row label {
+      font-size: 11px;
+      font-weight: bold;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
+<div id="control-panel">
+  <div style="font-weight:bold; font-size:15px; margin-bottom:5px; text-align:center;">Organic Edge Lab</div>
+  
+  <div class="panel-section" style="margin-top:5px;">Network Physics</div>
+  <div class="control-group">
+    <label>Repulsion Base: <span id="val-repBase">1300</span></label>
+    <input type="range" id="slider-repBase" min="0" max="3000" step="50" value="1300">
+  </div>
+  <div class="control-group">
+    <label>Repulsion per Node: <span id="val-repNode">1000</span></label>
+    <input type="range" id="slider-repNode" min="0" max="3000" step="50" value="1000">
+  </div>
+  <div class="control-group">
+    <label>Spring Rest Length: <span id="val-restLen">250</span></label>
+    <input type="range" id="slider-restLen" min="5" max="500" step="5" value="250">
+  </div>
+  <div class="control-group">
+    <label>Spring Constant (K): <span id="val-springK">0.146</span></label>
+    <input type="range" id="slider-springK" min="0.001" max="0.5" step="0.005" value="0.146">
+  </div>
+  <div class="control-group">
+    <label>Max Speed: <span id="val-maxSpeed">8</span></label>
+    <input type="range" id="slider-maxSpeed" min="1" max="30" step="1" value="8">
+  </div>
+  <div class="control-group">
+    <label>Repulsion Dist Mult: <span id="val-repDistMult">50.4</span></label>
+    <input type="range" id="slider-repDistMult" min="5" max="150" step="0.5" value="50.4">
+  </div>
+
+  <div class="panel-section">Stamp Texture Modifiers</div>
+  <div class="control-group">
+    <label>Line Resolution (Segments): <span id="val-segments">145</span></label>
+    <input type="range" id="slider-segments" min="10" max="300" step="5" value="145">
+  </div>
+  <div class="control-group">
+    <label>Macro Wave Scale: <span id="val-macroScale">0.008</span></label>
+    <input type="range" id="slider-macroScale" min="0.001" max="0.1" step="0.001" value="0.008">
+  </div>
+  <div class="control-group">
+    <label>Macro Wave Amplitude: <span id="val-macroAmp">0.07</span></label>
+    <input type="range" id="slider-macroAmp" min="0.0" max="0.4" step="0.01" value="0.07">
+  </div>
+  <div class="control-group">
+    <label>Micro Jagged Scale (Ink Bleed): <span id="val-microScale">1.5</span></label>
+    <input type="range" id="slider-microScale" min="0.05" max="3.0" step="0.05" value="1.5">
+  </div>
+  <div class="control-group">
+    <label>Micro Jagged Roughness: <span id="val-microAmp">2.0</span></label>
+    <input type="range" id="slider-microAmp" min="0.0" max="15.0" step="0.5" value="2.0">
+  </div>
+
+  <div class="panel-section">Edge Sizing</div>
+  <div class="control-group">
+    <label>Max Edge Thickness: <span id="val-edgeThickMax">20</span></label>
+    <input type="range" id="slider-edgeThickMax" min="1" max="60" step="1" value="20">
+  </div>
+  <div class="control-group">
+    <label>Min Edge Thickness: <span id="val-edgeThickMin">4</span></label>
+    <input type="range" id="slider-edgeThickMin" min="0" max="20" step="1" value="4">
+  </div>
+
+  <div class="panel-section">Color Customization</div>
+  <div class="color-row">
+    <label>Edge Color (Style 1):</label>
+    <input type="color" id="picker-m1Edge" value="#FF0000">
+  </div>
+  <div class="color-row">
+    <label>Edge Color (Style 2):</label>
+    <input type="color" id="picker-m2Edge" value="#000000">
+  </div>
+  <div class="color-row">
+    <label>Node Center Dot:</label>
+    <input type="color" id="picker-m1Dot" value="#000000">
+  </div>
+  <div class="color-row">
+    <label>Word Label Text:</label>
+    <input type="color" id="picker-m1Word" value="#FFFFFF">
+  </div>
+  <div class="color-row">
+    <label>Word Label Box Background:</label>
+    <input type="color" id="picker-boxBg" value="#FF0000">
+  </div>
+
+  <button id="btn-reset-cooling" style="width:100%; margin-top:12px; padding:6px; cursor:pointer; font-weight:bold;">Re-Energize Layout</button>
+</div>
+
 <script>
 let table;
 let csvData = [];
+let fontBold;
+let fontRegular;
 
-// =========================================================================
-// --- 1. USER DEFAULTS CONFIGURATION SECTION ---
-// Change these values to set the visual style
-// =========================================================================
+const UI_PADDING = 32; 
+const NETWORK_SCREEN_MARGIN = 45; 
 
-// --- Mode 1 (Primary Highlighted Neural Style) Defaults ---
-const DEFAULT_M1_EDGE_COLOR = '#B20003'; // Dark red
-const DEFAULT_M1_EDGE_THICK_VAL = 16;      // Value (Starting variable 'X')
+const BOX_PADDING_X = 6;  
+const BOX_PADDING_Y = 4;  
 
-const DEFAULT_M1_DOT_COLOR = '#840002';  // Yellowish
-const DEFAULT_M1_DOT_RADIUS_VAL = 2;      // Value
+let M1_EDGE_COLOR = '#FF0000'; 
+let M2_EDGE_COLOR = '#000000'; 
+let M1_DOT_COLOR = '#000000';  
+let M1_WORD_COLOR = '#FFFFFF'; 
+let BOX_BG_COLOR = '#FF0000';
+const BG_COLOR = '#ffffff';
 
-const DEFAULT_M1_WORD_COLOR = '#f4f4f4'; // Dark gray
-const DEFAULT_M1_WORD_SIZE_VAL = 14;     // Value
+const DEFAULT_M1_DOT_RADIUS_VAL = 2;      
+const DEFAULT_M1_WORD_SIZE_VAL = 14;     
 
-// --- Mode 3 (Secondary Highlighted Neural Style) Defaults ---
-const DEFAULT_M3_EDGE_COLOR = '#005AE2'; // Dark blue
-const DEFAULT_M3_EDGE_THICK_VAL = 12;      // Value (Starting variable 'X')
-
-const DEFAULT_M3_DOT_COLOR = '#840002';  // Yellowish
-const DEFAULT_M3_DOT_RADIUS_VAL = 2;      // Value
-
-const DEFAULT_M3_WORD_COLOR = '#f4f4f4'; // Dark gray
-const DEFAULT_M3_WORD_SIZE_VAL = 14;     // Value
-
-// --- Mode 2 (Background Mesh Style) Defaults ---
-const DEFAULT_M2_EDGE_COLOR = '#353637'; // Black
-const DEFAULT_M2_EDGE_THICK_VAL = 75;      // Value
-const M2_MIN_THICKNESS = 1;             // Constant for dynamic tapering limit
-
-const DEFAULT_M2_DOT_COLOR = '#353637';  // Black
-const DEFAULT_M2_DOT_RADIUS_VAL = 1;      // Value
-
-const DEFAULT_M2_WORD_COLOR = '#FFFFFF'; // White
-const DEFAULT_M2_WORD_SIZE_VAL = 10;     // Value
-
-// Global Color Variables initialized in setup()
-let c_m1Edge, c_m1Dot, c_m1Word;
-let c_m2Edge, c_m2Dot, c_m2Word;
-let c_m3Edge, c_m3Dot, c_m3Word;
-
-// =========================================================================
-// --- END DEFAULTS CONFIGURATION SECTION ---
-// =========================================================================
-
-// Global Data Shared Context
+let c_m1Edge, c_m2Edge, c_m1Dot, c_m1Word, c_boxBg, c_background;
 let themesID = [];
-
-// Split Screen State Controls
 let isSplitScreen = false;
-let viz1;
-let viz2;
+let viz1, viz2;
+
+// --- CONFIGURATION MANAGEMENT ---
+let physicsParams = {
+  repBase: 1300,
+  repNode: 1000,
+  restLen: 250,
+  springK: 0.146,
+  maxSpeed: 8,
+  repDistMult: 50.4,
+  
+  // Custom Raw Stamp Overhaul Values
+  segments: 145,
+  macroScale: 0.008,
+  macroAmp: 0.07,
+  microScale: 1.5,
+  microAmp: 2.0,
+
+  // Edge Dynamic Dimensions
+  edgeThickMax: 20,
+  edgeThickMin: 4
+};
+
+function setupUIEventListeners() {
+  const bindings = [
+    { id: 'repBase', key: 'repBase' },
+    { id: 'repNode', key: 'repNode' },
+    { id: 'restLen', key: 'restLen' },
+    { id: 'springK', key: 'springK' },
+    { id: 'maxSpeed', key: 'maxSpeed' },
+    { id: 'repDistMult', key: 'repDistMult' },
+    { id: 'segments', key: 'segments' },
+    { id: 'macroScale', key: 'macroScale' },
+    { id: 'macroAmp', key: 'macroAmp' },
+    { id: 'microScale', key: 'microScale' },
+    { id: 'microAmp', key: 'microAmp' },
+    { id: 'edgeThickMax', key: 'edgeThickMax' },
+    { id: 'edgeThickMin', key: 'edgeThickMin' }
+  ];
+
+  bindings.forEach(b => {
+    let slider = document.getElementById(`slider-${b.id}`);
+    let output = document.getElementById(`val-${b.id}`);
+    
+    slider.addEventListener('input', (e) => {
+      let val = parseFloat(e.target.value);
+      physicsParams[b.key] = val;
+      output.innerText = val;
+      if (viz1 && viz1.cooling < 0.1) viz1.cooling = 0.15;
+      if (viz2 && viz2.cooling < 0.1) viz2.cooling = 0.15;
+    });
+  });
+
+  // Color Pickers Real-Time Listeners
+  document.getElementById('picker-m1Edge').addEventListener('input', (e) => {
+    M1_EDGE_COLOR = e.target.value;
+    c_m1Edge = color(M1_EDGE_COLOR);
+  });
+  document.getElementById('picker-m2Edge').addEventListener('input', (e) => {
+    M2_EDGE_COLOR = e.target.value;
+    c_m2Edge = color(M2_EDGE_COLOR);
+  });
+  document.getElementById('picker-m1Dot').addEventListener('input', (e) => {
+    M1_DOT_COLOR = e.target.value;
+    c_m1Dot = color(M1_DOT_COLOR);
+  });
+  document.getElementById('picker-m1Word').addEventListener('input', (e) => {
+    M1_WORD_COLOR = e.target.value;
+    c_m1Word = color(M1_WORD_COLOR);
+  });
+  document.getElementById('picker-boxBg').addEventListener('input', (e) => {
+    BOX_BG_COLOR = e.target.value;
+    c_boxBg = color(BOX_BG_COLOR);
+  });
+
+  document.getElementById('btn-reset-cooling').addEventListener('click', () => {
+    if (viz1) viz1.cooling = 1.0;
+    if (viz2) viz2.cooling = 1.0;
+  });
+}
+
+function applyStyleScheme() {
+  c_background = color(BG_COLOR);
+  c_m1Edge = color(M1_EDGE_COLOR);
+  c_m2Edge = color(M2_EDGE_COLOR);
+  c_m1Dot = color(M1_DOT_COLOR);
+  c_m1Word = color(M1_WORD_COLOR);
+  c_boxBg = color(BOX_BG_COLOR);
+  document.body.style.backgroundColor = BG_COLOR;
+}
 
 function preload() {
-  table = loadTable('dataset_pred_labeled_21703_objects.csv', 'csv', 'header');
+  table = loadTable('dataset_pred_labeled_21703_objects.csv', 'csv', 'header', 
+    () => {}, 
+    () => {
+      table = new p5.Table();
+      table.addColumn('index'); table.addColumn('pred'); table.addColumn('label1'); table.addColumn('label1_full');
+      let r1 = table.addRow(); r1.setString('index', 'Eu sonhei que estava voando alto sobre as montanhas'); r1.setString('pred', '1'); r1.setString('label1', 'Voar'); r1.setString('label1_full', 'Voar, Altura');
+      let r2 = table.addRow(); r2.setString('index', 'Eu sonhei que caía de um prédio mas acordei antes'); r2.setString('pred', '1'); r2.setString('label1', 'Voar'); r2.setString('label1_full', 'Cair, Janela');
+    }
+  );
+  fontBold = loadFont('font/RedHatText-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
+  fontRegular = loadFont('font/RedHatText-Regular.ttf', () => {}, () => fontRegular = 'sans-serif');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  applyStyleScheme();
+  setupUIEventListeners();
   
-  // Initialize color objects from hex constants
-  c_m1Edge = color(DEFAULT_M1_EDGE_COLOR);
-  c_m1Dot = color(DEFAULT_M1_DOT_COLOR);
-  c_m1Word = color(DEFAULT_M1_WORD_COLOR);
-  
-  c_m2Edge = color(DEFAULT_M2_EDGE_COLOR);
-  c_m2Dot = color(DEFAULT_M2_DOT_COLOR);
-  c_m2Word = color(DEFAULT_M2_WORD_COLOR);
-  
-  c_m3Edge = color(DEFAULT_M3_EDGE_COLOR);
-  c_m3Dot = color(DEFAULT_M3_DOT_COLOR);
-  c_m3Word = color(DEFAULT_M3_WORD_COLOR);
+  noiseDetail(4, 0.54);
   
   for (let r = 0; r < table.getRowCount(); r++) {
     let row = table.getRow(r);
@@ -119,7 +325,6 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  
   if (isSplitScreen && viz1 && viz2) {
     viz1.resize(0, 0, width / 2, height);
     viz2.resize(width / 2, 0, width / 2, height);
@@ -129,104 +334,36 @@ function windowResized() {
 }
 
 function draw() {
-  background(0); // Pure black background
-  
+  background(c_background); 
   if (viz1) viz1.draw();
-  
   if (isSplitScreen && viz2) {
     viz2.draw();
-    
-    // Draw the structural vertical divider line in the exact center
-    push();
-    stroke(50);
-    strokeWeight(2);
-    line(width / 2, 0, width / 2, height);
-    pop();
+    push(); stroke(200); strokeWeight(2); line(width / 2, 0, width / 2, height); pop();
   }
 }
 
 function keyPressed() {
-  // Manual Highlight Advance
-  if (key === 'n' || key === 'N') {
-    if (viz1) viz1.triggerTransition('manual_advance');
-    if (isSplitScreen && viz2) viz2.triggerTransition('manual_advance');
-  }
-  
-  // Randomize Theme
   if (key === 'm' || key === 'M') {
     if (viz1) viz1.setRandomTheme();
-    if (isSplitScreen && viz2) {
-      let attempts = 0;
-      do {
-        viz2.setRandomTheme();
-        attempts++;
-      } while (viz2.selectedThemeIDIndex === viz1.selectedThemeIDIndex && themesID.length > 1 && attempts < 100);
-    }
-  }
-  
-  // Toggle Split Screen
-  if (key === '2') {
-    isSplitScreen = !isSplitScreen;
-    if (isSplitScreen) {
-      viz1.resize(0, 0, width / 2, height);
-      viz2 = new ThemeVisualizer(width / 2, 0, width / 2, height);
-      
-      let attempts = 0;
-      do {
-        viz2.setRandomTheme();
-        attempts++;
-      } while (viz2.selectedThemeIDIndex === viz1.selectedThemeIDIndex && themesID.length > 1 && attempts < 100);
-      
-    } else {
-      viz1.resize(0, 0, width, height);
-      viz2 = null;
-    }
   }
 }
 
-// Helper to extract words
 function getWordsFromString(str) {
   let raw = str ? str.toLowerCase() : "";
   return raw.match(/[\wà-ú]+/g) || [];
 }
 
-// =========================================================================
-// --- GRAPH ENGINE / THEME VISUALIZER CLASS ---
-// =========================================================================
-
 class ThemeVisualizer {
   constructor(offsetX, offsetY, w, h) {
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    this.w = w;
-    this.h = h;
-    
-    this.nodes = {};
-    this.edges = [];
-    
-    this.selectedThemeIDIndex = 0;
-    this.selectedThemeID = null;
-    this.selectedTheme = "";
-    this.selectedWordsTheme = [];
-    this.selectedThemeDreams = [];
-    
-    this.currentHighlightIndex = 0;
-    this.currentSecondHighlightIndex = -1;
-    
-    this.primaryIsFront = true;
-    this.lastAutoChangeTime = millis();
-    this.maxGraphLevel = 0;
-    
-    this.isTransitioning = false;
-    this.transitionStartTime = 0;
-    this.p5_nextAction = null;
+    this.offsetX = offsetX; this.offsetY = offsetY; this.w = w; this.h = h;
+    this.nodes = {}; this.edges = [];
+    this.selectedThemeIDIndex = 0; this.selectedThemeID = null;
+    this.selectedTheme = ""; this.selectedWordsTheme = []; this.selectedThemeDreams = [];
+    this.totalObjectsCount = 0; this.cooling = 1.0;
   }
   
   resize(offsetX, offsetY, w, h) {
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    this.w = w;
-    this.h = h;
+    this.offsetX = offsetX; this.offsetY = offsetY; this.w = w; this.h = h;
   }
   
   setRandomTheme() {
@@ -237,137 +374,68 @@ class ThemeVisualizer {
   }
   
   updateThemeData() {
-    this.selectedThemeID = themesID[this.selectedThemeIDIndex];
-    let themeRows = csvData.filter(r => r.pred === this.selectedThemeID);
-    
+    let themeRows = csvData.filter(r => r.pred === themesID[this.selectedThemeIDIndex]);
     if (themeRows.length > 0) {
+      this.selectedThemeID = themesID[this.selectedThemeIDIndex];
       this.selectedTheme = themeRows[0].label1;
       this.selectedWordsTheme = [...new Set(themeRows.map(r => r.label1_full))];
-      this.selectedThemeDreams = themeRows.map(r => r.index);
-      this.currentHighlightIndex = 0;
+      this.totalObjectsCount = themeRows.length;
+      let rawDreams = themeRows.map(r => r.index);
       
-      this.updateSecondHighlight();
+      if (rawDreams.length >= 2) {
+        this.selectedThemeDreams = [];
+        let tempArr = [...rawDreams];
+        for (let i = 0; i < 2; i++) {
+          this.selectedThemeDreams.push(tempArr.splice(floor(random(tempArr.length)), 1)[0]);
+        }
+      } else {
+        this.selectedThemeDreams = rawDreams;
+      }
       this.generateGraph();
-  
-      this.primaryIsFront = true;
-      this.lastAutoChangeTime = millis();
-      this.isTransitioning = false;
-      this.p5_nextAction = null;
+      this.cooling = 1.0;
     }
-  }
-  
-  triggerTransition(action) {
-    if (this.selectedThemeDreams.length > 0 && !this.isTransitioning) {
-      this.isTransitioning = true;
-      this.transitionStartTime = millis();
-      this.p5_nextAction = action;
-    }
-  }
-  
-  updateSecondHighlight() {
-    if (this.selectedThemeDreams.length <= 1) {
-      this.currentSecondHighlightIndex = -1;
-      return;
-    }
-  
-    let newIndex;
-    do {
-      newIndex = floor(random(this.selectedThemeDreams.length));
-    } while (newIndex === this.currentHighlightIndex);
-  
-    this.currentSecondHighlightIndex = newIndex;
   }
   
   generateGraph() {
-    this.nodes = {};
-    this.edges = [];
+    this.nodes = {}; this.edges = []; let edgeMap = {};
   
-    let uniqueWords = [];
-    let segments = [];
-  
-    for (let item of this.selectedThemeDreams) {
-      let words = item.toLowerCase().match(/[\wà-ú]+/g);
-      if (words && words.length > 0) {
-        segments.push(words);
-        for (let w of words) {
-          if (!uniqueWords.includes(w)) uniqueWords.push(w);
-        }
-      }
-    }
-    
-    if (uniqueWords.length === 0) return;
-  
-    let radius = min(this.w, this.h) * 0.4;
-    for (let i = 0; i < uniqueWords.length; i++) {
-      let word = uniqueWords[i];
-      let angle = map(i, 0, uniqueWords.length, 0, TWO_PI);
+    for (let objIdx = 0; objIdx < this.selectedThemeDreams.length; objIdx++) {
+      let words = getWordsFromString(this.selectedThemeDreams[objIdx]);
+      if (!words || words.length === 0) continue;
+      let sideCenterX = (objIdx === 0) ? this.w * 0.25 : this.w * 0.75;
       
-      let startX = this.w / 2 + cos(angle) * radius * 0.5;
-      let startY = this.h / 2 + sin(angle) * radius * 0.5;
-      
-      this.nodes[word] = new Node(word, startX, startY);
-    }
-  
-    let edgeMap = {};
-    for (let words of segments) {
       for (let i = 0; i < words.length; i++) {
         let word = words[i];
-        this.nodes[word].connections++; 
+        let nodeLookupKey = (word === 'sonhei' || word === 'que') ? word + "_" + objIdx : word;
+
+        if (!this.nodes[nodeLookupKey]) {
+          let startX = sideCenterX + random(-30, 30);
+          let startY = this.h / 2 + map(i, 0, words.length, -120, 120);
+          this.nodes[nodeLookupKey] = new Node(word, startX, startY);
+        }
+        this.nodes[nodeLookupKey].connections++;
         
         if (i < words.length - 1) {
           let nextWord = words[i + 1];
-          if (nextWord === 'sonhei') continue;
+          let nextNodeLookupKey = (nextWord === 'sonhei' || nextWord === 'que') ? nextWord + "_" + objIdx : nextWord;
+          let edgeKey = nodeLookupKey + "->" + nextNodeLookupKey;
+          let totalEdges = words.length - 1;
           
-          let edgeKey = word + "-" + nextWord;
           if (!edgeMap[edgeKey]) {
-            edgeMap[edgeKey] = { source: word, target: nextWord, weight: 1 };
+            edgeMap[edgeKey] = { source: nodeLookupKey, target: nextNodeLookupKey, weight: 1, steps: [i], totals: [totalEdges], ownerObjIdx: objIdx };
           } else {
-            edgeMap[edgeKey].weight++; 
+            edgeMap[edgeKey].weight++; edgeMap[edgeKey].steps.push(i); edgeMap[edgeKey].totals.push(totalEdges);
           }
         }
       }
     }
-  
-    let rootWord = "sonhei";
-    if (!this.nodes[rootWord] && segments.length > 0) rootWord = segments[0][0];
     
-    if (this.nodes[rootWord]) {
-      this.nodes[rootWord].isRoot = true;
-      this.nodes[rootWord].level = 0;
-  
-      let queue = [this.nodes[rootWord]];
-      while (queue.length > 0) {
-        let current = queue.shift();
-        
-        for (let key in edgeMap) {
-          if (edgeMap[key].source === current.word) {
-            let targetNode = this.nodes[edgeMap[key].target];
-            if (targetNode.level === Infinity) {
-              targetNode.level = current.level + 1;
-              queue.push(targetNode);
-            }
-          }
-        }
-      }
-    }
-  
-    this.maxGraphLevel = 0;
-    for (let key in this.nodes) {
-      if (this.nodes[key].level !== Infinity && this.nodes[key].level > this.maxGraphLevel) {
-        this.maxGraphLevel = this.nodes[key].level;
-      }
-    }
-  
     for (let key in edgeMap) {
       let e = edgeMap[key];
-      let sourceNode = this.nodes[e.source];
-      let structuralLevel = sourceNode.level === Infinity ? 2 : sourceNode.level;
-      
+      let sumStep = e.steps.reduce((a, b) => a + b, 0);
       this.edges.push({ 
-        source: sourceNode, 
-        target: this.nodes[e.target], 
-        weight: e.weight, 
-        structuralLevel: structuralLevel
+        source: this.nodes[e.source], target: this.nodes[e.target], weight: e.weight, 
+        avgStep: sumStep / e.steps.length, avgTotal: e.totals[0], ownerObjIdx: e.ownerObjIdx 
       });
     }
   }
@@ -375,380 +443,158 @@ class ThemeVisualizer {
   updatePhysics() {
     let nodeArray = Object.values(this.nodes);
     if (nodeArray.length === 0) return;
+    if (this.cooling <= 0.001) { this.cooling = 0; return; }
     
-    let repForceMult = 1 + (nodeArray.length * 300); 
-    let baseSpringRestLen = 60; 
-    let baseSpringK = 0.05;
-    let centerGravity = 0.0001; 
-    let damping = 0.85; 
-    let maxSpeed = 40; 
-    let maxRepulsionDist = max(this.w, this.h) * 0.15;
+    let repForceMult = physicsParams.repBase + (nodeArray.length * physicsParams.repNode); 
+    let maxRepulsionDist = max(this.w, this.h) * physicsParams.repDistMult;
   
     for (let i = 0; i < nodeArray.length; i++) {
       for (let j = i + 1; j < nodeArray.length; j++) {
-        let n1 = nodeArray[i];
-        let n2 = nodeArray[j];
-        let dx = n1.x - n2.x;
-        let dy = n1.y - n2.y;
-        let d = dist(n1.x, n1.y, n2.x, n2.y);
-        
+        let n1 = nodeArray[i]; let n2 = nodeArray[j];
+        let dx = n1.x - n2.x; let dy = n1.y - n2.y; let d = dist(n1.x, n1.y, n2.x, n2.y);
         if (d > 0 && d < maxRepulsionDist) {
-          let force = repForceMult / (d * d + 50);
-          let fx = (dx / d) * force;
-          let fy = (dy / d) * force;
-          n1.vx += fx; n1.vy += fy;
-          n2.vx -= fx; n2.vy -= fy;
+          let force = repForceMult / (d * d + 40);
+          n1.vx += (dx / d) * force; n1.vy += (dy / d) * force;
+          n2.vx -= (dx / d) * force; n2.vy -= (dy / d) * force;
         }
       }
     }
     
     for (let edge of this.edges) {
-      let dx = edge.target.x - edge.source.x;
-      let dy = edge.target.y - edge.source.y;
+      let dx = edge.target.x - edge.source.x; let dy = edge.target.y - edge.source.y;
       let d = dist(edge.source.x, edge.source.y, edge.target.x, edge.target.y);
-      
       if (d > 0) {
-        let dynamicRestLen = Math.max(baseSpringRestLen - (edge.weight * 5), 20); 
-        let dynamicSpringK = baseSpringK * (1 + edge.weight * 0.2); 
-        
-        let force = (d - dynamicRestLen) * dynamicSpringK;
-        let fx = (dx / d) * force;
-        let fy = (dy / d) * force;
-        edge.source.vx += fx; edge.source.vy += fy;
-        edge.target.vx -= fx; edge.target.vy -= fy;
+        let force = (d - physicsParams.restLen) * physicsParams.springK;
+        edge.source.vx += (dx / d) * force; edge.source.vy += (dy / d) * force;
+        edge.target.vx -= (dx / d) * force; edge.target.vy -= (dy / d) * force;
       }
     }
     
     for (let n of nodeArray) {
-      n.vx += (this.w / 2 - n.x) * centerGravity;
+      n.vy += (this.h / 2 - n.y) * 0.01; 
+      n.vx = constrain(n.vx, -physicsParams.maxSpeed, physicsParams.maxSpeed);
+      n.vy = constrain(n.vy, -physicsParams.maxSpeed, physicsParams.maxSpeed);
+      n.x += n.vx * this.cooling; n.y += n.vy * this.cooling;
+      n.vx *= 0.72; n.vy *= 0.72;
       
-      let graphCenterY = this.h / 2;
-      let levelOffset = (n.level !== Infinity ? n.level - (this.maxGraphLevel / 2) : 0) * 60;
-      let targetY = graphCenterY + levelOffset;
-      
-      n.vy += (targetY - n.y) * 0.005;
-      
-      n.vx = constrain(n.vx, -maxSpeed, maxSpeed);
-      n.vy = constrain(n.vy, -maxSpeed, maxSpeed);
-  
-      n.x += n.vx;
-      n.y += n.vy;
-      
-      n.vx *= damping;
-      n.vy *= damping;
+      if (n.x < NETWORK_SCREEN_MARGIN) { n.x = NETWORK_SCREEN_MARGIN; n.vx *= -0.2; }
+      if (n.x > this.w - NETWORK_SCREEN_MARGIN) { n.x = this.w - NETWORK_SCREEN_MARGIN; n.vx *= -0.2; }
+      if (n.y < NETWORK_SCREEN_MARGIN) { n.y = NETWORK_SCREEN_MARGIN; n.vy *= -0.2; }
+      if (n.y > this.h - NETWORK_SCREEN_MARGIN) { n.h = this.h - NETWORK_SCREEN_MARGIN; n.vy *= -0.2; }
     }
+    this.cooling *= 0.985;
   }
 
   draw() {
-    push();
-    translate(this.offsetX, this.offsetY);
-    
-    // Hard clipping bound area so the graph physically does not escape its box boundaries
-    drawingContext.save();
-    drawingContext.beginPath();
-    drawingContext.rect(0, 0, this.w, this.h);
-    drawingContext.clip();
+    push(); translate(this.offsetX, this.offsetY);
+    drawingContext.save(); drawingContext.beginPath(); drawingContext.rect(0, 0, this.w, this.h); drawingContext.clip();
     
     this.updatePhysics();
-  
-    // --- ANIMATION TRANSITION ENGINE ---
-    let transProgress = 0;
-    if (this.isTransitioning) {
-      transProgress = (millis() - this.transitionStartTime) / 1000.0;
-      if (transProgress >= 1.0) {
-        transProgress = 1.0;
-        this.isTransitioning = false;
-        
-        if (this.p5_nextAction === 'auto_advance' || this.p5_nextAction === 'manual_advance') {
-          if (this.selectedThemeDreams.length > 0) {
-            let attempts = 0;
-            do {
-              this.currentHighlightIndex = (this.currentHighlightIndex + 1) % this.selectedThemeDreams.length;
-              attempts++;
-            } while (this.currentHighlightIndex === this.currentSecondHighlightIndex && this.selectedThemeDreams.length > 1 && attempts < this.selectedThemeDreams.length);
-          }
-          this.primaryIsFront = true;
-        }
-        this.lastAutoChangeTime = millis();
-        this.p5_nextAction = null;
-      }
-    }
-  
-    // --- AUTOMATIC ALTERNATING HIGHLIGHT TIMER ---
-    if (!this.isTransitioning) {
-      if (millis() - this.lastAutoChangeTime >= 5000) {
-        if (this.primaryIsFront) {
-          this.updateSecondHighlight();
-          this.primaryIsFront = false;
-          this.lastAutoChangeTime = millis();
-        } else {
-          this.triggerTransition('auto_advance');
-        }
-      }
-    }
-    
-    let path1Str = this.selectedThemeDreams.length > 0 ? this.selectedThemeDreams[this.currentHighlightIndex] : "";
-    let path2Str = (this.currentSecondHighlightIndex >= 0 && this.selectedThemeDreams.length > this.currentSecondHighlightIndex) ? this.selectedThemeDreams[this.currentSecondHighlightIndex] : "";
-    
-    let path1Words = getWordsFromString(path1Str);
-    let path2Words = getWordsFromString(path2Str);
-    
-    let totalEdgesPath1 = Math.max(path1Words.length - 1, 0);
-    let totalEdgesPath2 = Math.max(path2Words.length - 1, 0);
-    
-    let high1Words = new Set(path1Words);
-    let high2Words = new Set(path2Words);
-    
-    let high1Pairs = new Map();
-    let high2Pairs = new Map();
-    
-    for (let i = 0; i < path1Words.length - 1; i++) {
-      let edgeKey = path1Words[i] + "->" + path1Words[i+1];
-      if (!high1Pairs.has(edgeKey)) high1Pairs.set(edgeKey, i);
-    }
-    for (let i = 0; i < path2Words.length - 1; i++) {
-      let edgeKey = path2Words[i] + "->" + path2Words[i+1];
-      if (!high2Pairs.has(edgeKey)) high2Pairs.set(edgeKey, i);
-    }
-    
-    let normalEdges = [];
-    let edgesHigh1 = [];
-    let edgesHigh2 = [];
     
     for (let edge of this.edges) {
-      let edgeKey = edge.source.word + "->" + edge.target.word;
-      
-      if (high1Pairs.has(edgeKey)) {
-        edgesHigh1.push({ data: edge, step: high1Pairs.get(edgeKey) });
-      } else if (high2Pairs.has(edgeKey)) {
-        edgesHigh2.push({ data: edge, step: high2Pairs.get(edgeKey) });
-      } else {
-        normalEdges.push(edge);
-      }
+      drawStaticEdge(edge.source, edge.target, (edge.ownerObjIdx === 1) ? 2 : 1, edge.avgStep, edge.avgTotal);
     }
-    
-    for (let edge of normalEdges) {
-      drawOrganicEdge(edge.source, edge.target, 2, -1, 0, edge.structuralLevel, this.maxGraphLevel);
-    }
-    for (let key in this.nodes) {
-      if (!high1Words.has(key) && !high2Words.has(key)) {
-        this.nodes[key].display(2);
-      }
-    }
-    
-    if (this.primaryIsFront) {
-      for (let item of edgesHigh2) {
-        drawOrganicEdge(item.data.source, item.data.target, 3, item.step, totalEdgesPath2, null, this.maxGraphLevel);
-      }
-      for (let key in this.nodes) {
-        if (high2Words.has(key) && !high1Words.has(key)) {
-          this.nodes[key].display(3);
-        }
-      }
-      
-      for (let item of edgesHigh1) {
-        let currentStyle = 1;
-        if (this.isTransitioning) {
-          let edgeP = totalEdgesPath1 > 1 ? item.step / (totalEdgesPath1 - 1) : 0;
-          if (edgeP >= (1 - transProgress)) currentStyle = 3; 
-        }
-        drawOrganicEdge(item.data.source, item.data.target, currentStyle, item.step, totalEdgesPath1, null, this.maxGraphLevel);
-      }
-      for (let key in this.nodes) {
-        if (high1Words.has(key)) {
-          let currentStyle = 1;
-          if (this.isTransitioning) {
-            let idx = path1Words.indexOf(key);
-            let nodeP = path1Words.length > 1 ? idx / (path1Words.length - 1) : 0;
-            if (nodeP >= (1 - transProgress)) currentStyle = 3; 
-          }
-          this.nodes[key].display(currentStyle);
-        }
-      }
-    } else {
-      for (let item of edgesHigh1) {
-        let currentStyle = 1;
-        if (this.isTransitioning) {
-          let edgeP = totalEdgesPath1 > 1 ? item.step / (totalEdgesPath1 - 1) : 0;
-          if (edgeP >= (1 - transProgress)) currentStyle = 3; 
-        }
-        drawOrganicEdge(item.data.source, item.data.target, currentStyle, item.step, totalEdgesPath1, null, this.maxGraphLevel);
-      }
-      for (let key in this.nodes) {
-        if (high1Words.has(key) && !high2Words.has(key)) {
-          let currentStyle = 1;
-          if (this.isTransitioning) {
-            let idx = path1Words.indexOf(key);
-            let nodeP = path1Words.length > 1 ? idx / (path1Words.length - 1) : 0;
-            if (nodeP >= (1 - transProgress)) currentStyle = 3; 
-          }
-          this.nodes[key].display(currentStyle);
-        }
-      }
-      
-      for (let item of edgesHigh2) {
-        drawOrganicEdge(item.data.source, item.data.target, 3, item.step, totalEdgesPath2, null, this.maxGraphLevel);
-      }
-      for (let key in this.nodes) {
-        if (high2Words.has(key)) {
-          this.nodes[key].display(3);
-        }
-      }
-    }
-  
+    for (let key in this.nodes) { this.nodes[key].display(); }
     this.drawHUD();
     
-    drawingContext.restore();
-    pop();
+    drawingContext.restore(); pop();
   }
 
   drawHUD() {
-    if (!this.selectedWordsTheme || this.selectedWordsTheme.length === 0) return;
-  
-    push();
-    let paddingLeft = 24;
-    let wordSize = 14;
-    let lineSpacing = 8;
-    
-    let numWords = this.selectedWordsTheme.length;
-    let totalHeight = 0;
-    if (numWords > 0) {
-      totalHeight = numWords * (wordSize + lineSpacing) - lineSpacing; 
-    }
-    
-    let startY = (this.h / 2) - (totalHeight / 2);
-    
-    textFont('Mukta Vaani');
-    textAlign(LEFT, TOP);
-    noStroke();
-    textStyle(NORMAL);
-    textSize(wordSize);
-    fill(200); 
-    
-    for (let i = 0; i < this.selectedWordsTheme.length; i++) {
-      text(this.selectedWordsTheme[i], paddingLeft, startY);
-      startY += wordSize + lineSpacing;
-    }
+    push(); textAlign(LEFT, TOP); noStroke();
+    textFont(fontRegular); textSize(14); fill('#535353');
+    text("Exibindo", UI_PADDING, UI_PADDING);
+    fill('#000000');
+    text(this.totalObjectsCount + " sonhos (Comparando 2)", UI_PADDING + textWidth("Exibindo "), UI_PADDING);
     pop();
   }
 }
 
-// Global edge rendering helper function
-function drawOrganicEdge(source, target, styleMode, highlightStep, totalHighlightEdges, hierarchyLevel, maxGraphLevel) {
+function drawStaticEdge(source, target, styleMode, highlightStep, totalHighlightEdges) {
   let distance = dist(source.x, source.y, target.x, target.y);
   if (distance < 3) return;
   
-  let thickness;
-  let baseColor;
-  let alphaVal;
-  
-  if (styleMode === 1) {
-    if (totalHighlightEdges > 1) {
-      thickness = map(highlightStep, 0, totalHighlightEdges - 1, DEFAULT_M1_EDGE_THICK_VAL, 1);
-    } else {
-      thickness = DEFAULT_M1_EDGE_THICK_VAL;
-    }
-    baseColor = c_m1Edge;
-    alphaVal = 255; 
-  } else if (styleMode === 3) {
-    if (totalHighlightEdges > 1) {
-      thickness = map(highlightStep, 0, totalHighlightEdges - 1, DEFAULT_M3_EDGE_THICK_VAL, 1);
-    } else {
-      thickness = DEFAULT_M3_EDGE_THICK_VAL;
-    }
-    baseColor = c_m3Edge;
-    alphaVal = 255;
-  } else {
-    let baseThick = DEFAULT_M2_EDGE_THICK_VAL;
-    thickness = map(hierarchyLevel, 0, maxGraphLevel, baseThick, M2_MIN_THICKNESS, true);
-    thickness = Math.max(thickness, M2_MIN_THICKNESS);
-    baseColor = c_m2Edge;
-    alphaVal = 255; 
-  }
+  let thickness = (totalHighlightEdges > 1) 
+    ? map(highlightStep, 0, totalHighlightEdges - 1, physicsParams.edgeThickMax, physicsParams.edgeThickMin) 
+    : physicsParams.edgeThickMax;
+
+  let activeColor = (styleMode === 2) ? c_m2Edge : c_m1Edge;
 
   push();
-  strokeWeight(thickness);
-  stroke(red(baseColor), green(baseColor), blue(baseColor), alphaVal);
   noFill();
   strokeCap(ROUND);
-  strokeJoin(ROUND);
+  strokeJoin(ROUND);    
   
-  beginShape();
-  let segments = 5; 
-  for (let i = 0; i <= segments; i++) {
-    let t = i / segments;
+  let segs = physicsParams.segments;
+  let pointsList = [];
+  
+  let angleNormal = atan2(target.y - source.y, target.x - source.x);
+  
+  for (let i = 0; i <= segs; i++) {
+    let t = i / segs;
     let bx = lerp(source.x, target.x, t);
     let by = lerp(source.y, target.y, t);
     
-    if (i > 0 && i < segments) {
-      let noiseVal = noise(bx * 0.02, by * 0.02, frameCount * 0.001);
-      let angle = atan2(target.y - source.y, target.x - source.x) + HALF_PI;
-      let offsetDist = map(noiseVal, 0, 1, -distance * 0.15, distance * 0.15);
+    if (i > 0 && i < segs) {
+      let macroNoise = noise(bx * physicsParams.macroScale, by * physicsParams.macroScale, 11.2);
+      let macroOffset = map(macroNoise, 0, 1, -distance * physicsParams.macroAmp, distance * physicsParams.macroAmp);
       
-      bx += cos(angle) * offsetDist;
-      by += sin(angle) * offsetDist;
+      let microNoise = noise(bx * physicsParams.microScale, by * physicsParams.microScale, 84.7);
+      let microOffset = map(microNoise, 0, 1, -physicsParams.microAmp, physicsParams.microAmp);
+      
+      let finalOffset = macroOffset + microOffset;
+      bx += cos(angleNormal + HALF_PI) * finalOffset;
+      by += sin(angleNormal + HALF_PI) * finalOffset;
     }
-    vertex(bx, by);
+    pointsList.push({ x: bx, y: by });
+  }
+  
+  // Baseline stroke using active interface color state
+  strokeWeight(thickness);
+  stroke(red(activeColor), green(activeColor), blue(activeColor), 255);
+  beginShape();
+  if (pointsList.length > 0) {
+    curveVertex(pointsList[0].x, pointsList[0].y);
+    for (let pt of pointsList) { curveVertex(pt.x, pt.y); }
+    curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y);
   }
   endShape();
+  
+  // Stamp texture bleed layer
+  strokeWeight(thickness * 0.85);
+  stroke(red(activeColor), green(activeColor), blue(activeColor), 120);
+  beginShape();
+  if (pointsList.length > 0) {
+    curveVertex(pointsList[0].x, pointsList[0].y);
+    for (let pt of pointsList) { 
+      let fuzz = random(-0.6, 0.6);
+      curveVertex(pt.x + fuzz, pt.y + fuzz); 
+    }
+    curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y);
+  }
+  endShape();
+  
   pop();
 }
 
-// Global Node Object Blueprint
 class Node {
   constructor(word, x, y) {
-    this.word = word;
-    this.x = x;
-    this.y = y;
-    this.vx = 0;
-    this.vy = 0;
-    this.isRoot = false;
-    this.connections = 0; 
-    this.level = Infinity; 
+    this.word = word; this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.connections = 0; 
   }
   
-  display(styleMode) {
-    push();
-    translate(this.x, this.y);
+  display() {
+    push(); translate(this.x, this.y); noStroke(); fill(c_m1Dot); 
+    if (DEFAULT_M1_DOT_RADIUS_VAL > 0) circle(0, 0, DEFAULT_M1_DOT_RADIUS_VAL * 2);
     
-    noStroke();
-    let currentRadius;
-    let wColor, wSize;
+    textFont(fontBold); textSize(DEFAULT_M1_WORD_SIZE_VAL); textAlign(LEFT, CENTER);
+    let txtWidth = textWidth(this.word);
+    let boxX = DEFAULT_M1_DOT_RADIUS_VAL + 4;
+    let boxY = -DEFAULT_M1_WORD_SIZE_VAL / 2;
     
-    if (styleMode === 1) {
-      fill(c_m1Dot); 
-      currentRadius = DEFAULT_M1_DOT_RADIUS_VAL;
-      wColor = c_m1Word;
-      wSize = DEFAULT_M1_WORD_SIZE_VAL;
-    } else if (styleMode === 3) {
-      fill(c_m3Dot); 
-      currentRadius = DEFAULT_M3_DOT_RADIUS_VAL;
-      wColor = c_m3Word;
-      wSize = DEFAULT_M3_WORD_SIZE_VAL;
-    } else {
-      let c = c_m2Dot;
-      fill(red(c), green(c), blue(c), 50); 
-      currentRadius = DEFAULT_M2_DOT_RADIUS_VAL;
-    }
-    
-    if (currentRadius > 0) circle(0, 0, currentRadius * 2);
-    
-    if (styleMode === 1 || styleMode === 3) {
-      textFont('Mukta Vaani');
-      textAlign(LEFT, CENTER);
-      textStyle(BOLD);
-      
-      // MODIFIED: Force the word 'sonhei' to render as green
-      if (this.word === 'sonhei') {
-        fill('#00FF00'); // Green hex color
-      } else {
-        fill(wColor); 
-      }
-      
-      textSize(wSize);    
-      text(this.word, currentRadius + 4, 0); 
-    }
-    
+    // Custom label box color and text color applied dynamically
+    stroke(0, 25); strokeWeight(1); fill(c_boxBg); 
+    rect(boxX - BOX_PADDING_X, boxY - BOX_PADDING_Y, txtWidth + (BOX_PADDING_X * 2), DEFAULT_M1_WORD_SIZE_VAL + (BOX_PADDING_Y * 2));
+    noStroke(); fill(c_m1Word); text(this.word, boxX, 0);
     pop();
   }
 }
