@@ -333,6 +333,7 @@ let physicsParams = {
 // =========================================================================
 
 function preload() {
+  // Update CSV path if it is also in the same folder
   table = loadTable('sonhos_ate10palavras.csv', 'csv', 'header', 
     () => {}, 
     () => {
@@ -342,9 +343,11 @@ function preload() {
       let r2 = table.addRow(); r2.setString('index', 'Eu sonhei que caía de um prédio mas acordei antes'); r2.setString('pred', '1'); r2.setString('label1', 'Voar'); r2.setString('label1_full', 'Cair, Janela');
     }
   );
-  Bold = loadFont('SUSEMono-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
+
+  // Updated font paths to target the current directory
+  fontBold = loadFont('SUSEMono-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
   fontRegular = loadFont('SUSEMono-regular.ttf', () => {}, () => fontRegular = 'sans-serif');
-  fontMedium = loadFont('SUSEMono-Medium.ttf', () => {}, () => fontRegular = 'sans-serif');
+  fontMedium = loadFont('SUSEMono-Medium.ttf', () => {}, () => fontMedium = 'sans-serif');
 }
 
 function setup() {
