@@ -7,18 +7,20 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght=200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  
   <style>
     body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      background-color: #ffffff;
-      font-family: sans-serif;
+      background-color: #121619;
+      font-family: 'Fira Sans', sans-serif;
     }
     #control-panel {
+      display: none; /* Add this line to hide it immediately on load */
       position: absolute;
       top: 20px;
       right: 20px;
@@ -40,6 +42,53 @@
       padding-bottom: 3px;
       color: #111;
     }
+    .subtitulo{
+      color:#838383;
+      font-size:14px;
+    }
+
+    .titulo {
+      font-weight: bold; 
+      font-size: 32px; 
+      line-height: 32px;
+      font-size: 40px;
+    color: #f4f4f4;
+    margin-top: 12px;
+      
+      /* New properties for the grey box */
+      padding: 0px 0px;         /* Adds just a bit of breathing room inside the box */
+      margin-bottom: 12px;       /* Pushes the subtitle down a bit */
+    }
+    .descricao, .descricao-estendida{
+      font-size: 18px;
+    line-height: 28px;
+      line-height: 24px;
+    }
+
+    .imagem{
+
+    }
+
+    .parte-superior{
+      min-width:500px;
+    }
+
+    .text-inside{
+      max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .parte-superior, .parte-inferior{
+      color:#c6c6c6;
+      margin-bottom: 120px;
+      margin-left: auto;
+    text-align: center;
+    margin-right: auto;
+    margin-top: 120px;
+    width: min-content;
+    }
+
     .control-group {
       margin-bottom: 10px;
     }
@@ -80,6 +129,14 @@
   </style>
 </head>
 <body>
+<div class="parte-superior">
+    <div class="imagem">
+      <img src="logo.png" alt="Legena da visualização" style="width: 200px; height: auto; margin-top: 32px; margin-bottom: 32px"> <br>  
+</div>
+<div class="titulo">85 Mil Glifos</div>
+<br><br>
+<div class="descricao">Visualização de dados artística e generativa desenvolvida a partir de 4.943 sonhos reais compartilhados na internet. Os sonhos foram classificados em 505 eixos temáticos que são selecionados aleatóriamente. A cada tema selecionado, dois sonhos são selecionados e representados juntos, formando um glifo único entre as 85.181 combinações possíveis. Desenvolvido por Yan Hill para disciplina de Visualização de Dados Criativa na UFRJ em 2026.</div>
+</div>
 
 <div id="control-panel">
   <div style="font-weight:bold; font-size:15px; margin-bottom:5px; text-align:center;">Organic Edge Lab</div>
@@ -102,8 +159,8 @@
     <input type="range" id="slider-springK" min="0.001" max="0.5" step="0.005" value="0.146">
   </div>
   <div class="control-group">
-    <label>Max Speed: <span id="val-maxSpeed">8</span></label>
-    <input type="range" id="slider-maxSpeed" min="1" max="30" step="1" value="8">
+    <label>Max Speed: <span id="val-maxSpeed">30</span></label>
+    <input type="range" id="slider-maxSpeed" min="1" max="800" step="1" value="800">
   </div>
   <div class="control-group">
     <label>Repulsion Dist Mult: <span id="val-repDistMult">50.4</span></label>
@@ -112,34 +169,39 @@
 
   <div class="panel-section">Stamp Texture Modifiers</div>
   <div class="control-group">
-    <label>Line Resolution (Segments): <span id="val-segments">145</span></label>
-    <input type="range" id="slider-segments" min="10" max="300" step="5" value="145">
+  <label>Curve Tension / Bezier Force</label>
+  <input type="range" id="slider-curveTension" min="-5" max="5" step="0.1" value="0.6">
+  <span id="val-curveTension">0</span>
+</div>
+  <div class="control-group">
+    <label>Line Resolution (Segments): <span id="val-segments">15</span></label>
+    <input type="range" id="slider-segments" min="10" max="300" step="5" value="15">
   </div>
   <div class="control-group">
-    <label>Macro Wave Scale: <span id="val-macroScale">0.008</span></label>
-    <input type="range" id="slider-macroScale" min="0.001" max="0.1" step="0.001" value="0.008">
+    <label>Macro Wave Scale: <span id="val-macroScale">0.001</span></label>
+    <input type="range" id="slider-macroScale" min="0.001" max="0.1" step="0.001" value="0.001">
   </div>
   <div class="control-group">
-    <label>Macro Wave Amplitude: <span id="val-macroAmp">0.07</span></label>
-    <input type="range" id="slider-macroAmp" min="0.0" max="0.4" step="0.01" value="0.07">
+    <label>Macro Wave Amplitude: <span id="val-macroAmp">0.02</span></label>
+    <input type="range" id="slider-macroAmp" min="0.0" max="0.4" step="0.01" value="0.02">
   </div>
   <div class="control-group">
-    <label>Micro Jagged Scale (Ink Bleed): <span id="val-microScale">1.5</span></label>
-    <input type="range" id="slider-microScale" min="0.05" max="3.0" step="0.05" value="1.5">
+    <label>Micro Jagged Scale (Ink Bleed): <span id="val-microScale">0.3</span></label>
+    <input type="range" id="slider-microScale" min="0.05" max="3.0" step="0.05" value="0.3">
   </div>
   <div class="control-group">
-    <label>Micro Jagged Roughness: <span id="val-microAmp">2.0</span></label>
-    <input type="range" id="slider-microAmp" min="0.0" max="15.0" step="0.5" value="2.0">
+    <label>Micro Jagged Roughness: <span id="val-microAmp">6</span></label>
+    <input type="range" id="slider-microAmp" min="0.0" max="15.0" step="0.5" value="6">
   </div>
 
   <div class="panel-section">Edge Sizing</div>
   <div class="control-group">
     <label>Max Edge Thickness: <span id="val-edgeThickMax">20</span></label>
-    <input type="range" id="slider-edgeThickMax" min="1" max="60" step="1" value="20">
+    <input type="range" id="slider-edgeThickMax" min="1" max="60" step="1" value="40">
   </div>
   <div class="control-group">
     <label>Min Edge Thickness: <span id="val-edgeThickMin">4</span></label>
-    <input type="range" id="slider-edgeThickMin" min="0" max="20" step="1" value="4">
+    <input type="range" id="slider-edgeThickMin" min="0" max="20" step="1" value="20">
   </div>
 
   <div class="panel-section">Color Customization</div>
@@ -165,126 +227,118 @@
   </div>
 
   <button id="btn-reset-cooling" style="width:100%; margin-top:12px; padding:6px; cursor:pointer; font-weight:bold;">Re-Energize Layout</button>
+<hr>
+<h4>Box Visual Settings</h4>
+
+<label>Box Background Color:</label>
+<input type="color" id="picker-boxBg" value="#FF0000">
+<br>
+
+<label>Box Outline Color:</label>
+<input type="color" id="picker-boxOutline" value="#000000">
+<br>
+
+<label>Outline Thickness: <span id="val-boxStrokeWt">0</span></label>
+<input type="range" id="slider-boxStrokeWt" min="0" max="10" step="0.5" value="0">
+<br>
+
+<label>X Offset: <span id="val-boxOffsetX">0</span></label>
+<input type="range" id="slider-boxOffsetX" min="-20" max="20" step="1" value="0">
+<br>
+
+<label>Y Offset: <span id="val-boxOffsetY">0</span></label>
+<input type="range" id="slider-boxOffsetY" min="-20" max="20" step="1" value="0">
+<br>
+
+<label>Extra Width: <span id="val-boxPadX">6</span></label>
+<input type="range" id="slider-boxPadX" min="0" max="50" step="1" value="6">
+<br>
+
+<label>Extra Height: <span id="val-boxPadY">4</span></label>
+<input type="range" id="slider-boxPadY" min="0" max="50" step="1" value="4">
 </div>
 
+<div id="sketch-container"></div>
+
 <script>
+// =========================================================================
+// --- CONFIGURATION MANAGEMENT & GLOBAL VARIABLES ---
+// =========================================================================
+
 let table;
 let csvData = [];
 let fontBold;
 let fontRegular;
 
 const UI_PADDING = 32; 
-const NETWORK_SCREEN_MARGIN = 45; 
 
-const BOX_PADDING_X = 6;  
-const BOX_PADDING_Y = 4;  
+const MARGIN_TOP = 120;
+let MARGIN_LEFT = 300;   
+let MARGIN_RIGHT = 300;  
+const MARGIN_BOTTOM = 120; 
 
-let M1_EDGE_COLOR = '#FF0000'; 
+const BOX_PADDING_X = 0;  
+const BOX_PADDING_Y = 0;  
+
+let M1_EDGE_COLOR = '#A22426'; 
 let M2_EDGE_COLOR = '#000000'; 
 let M1_DOT_COLOR = '#000000';  
-let M1_WORD_COLOR = '#FFFFFF'; 
-let BOX_BG_COLOR = '#FF0000';
+let M1_WORD_COLOR = '#000000'; 
+let BOX_BG_COLOR = '#DEDEDE';
+let BOX_OUTLINE_COLOR = '#000000';
 const BG_COLOR = '#ffffff';
 
 const DEFAULT_M1_DOT_RADIUS_VAL = 2;      
 const DEFAULT_M1_WORD_SIZE_VAL = 14;     
 
-let c_m1Edge, c_m2Edge, c_m1Dot, c_m1Word, c_boxBg, c_background;
+let c_m1Edge, c_m2Edge, c_m1Dot, c_m1Word, c_boxBg, c_boxOutline, c_background;
 let themesID = [];
 let isSplitScreen = false;
 let viz1, viz2;
+let uiVisible = false; 
 
-// --- CONFIGURATION MANAGEMENT ---
+let lastUpdateTime = 0;
+const UPDATE_INTERVAL = 20000; 
+
+let codigoSonho1 = "001", autorSonho1 = "x0Ed0bH45", datahoraSonho1 = "01/01/2024 10:00:18";
+let codigoSonho2 = "002", autorSonho2 = "f4Hj8Csd", datahoraSonho2 = "02/01/2024 14:30:52";
+
+let boxParams = {
+  strokeWeight: 0,
+  offsetX: 0,
+  offsetY: 3,
+  padX: 0,
+  padY: 0
+};
+
 let physicsParams = {
   repBase: 1300,
   repNode: 1000,
   restLen: 250,
   springK: 0.146,
-  maxSpeed: 8,
+  maxSpeed: 200,
   repDistMult: 50.4,
   
-  // Custom Raw Stamp Overhaul Values
-  segments: 145,
-  macroScale: 0.008,
-  macroAmp: 0.07,
-  microScale: 1.5,
-  microAmp: 2.0,
+  segments: 10,
+  macroScale: 0.001,
+  macroAmp: 0.02,
+  microScale: 0.3,
+  microAmp: 6,
 
-  // Edge Dynamic Dimensions
-  edgeThickMax: 20,
-  edgeThickMin: 4
+  edgeThickMax: 40,
+  edgeThickMin: 20,
+  
+  curveTension: 0.6,
+  specialCurveTension: -0.7 
 };
 
-function setupUIEventListeners() {
-  const bindings = [
-    { id: 'repBase', key: 'repBase' },
-    { id: 'repNode', key: 'repNode' },
-    { id: 'restLen', key: 'restLen' },
-    { id: 'springK', key: 'springK' },
-    { id: 'maxSpeed', key: 'maxSpeed' },
-    { id: 'repDistMult', key: 'repDistMult' },
-    { id: 'segments', key: 'segments' },
-    { id: 'macroScale', key: 'macroScale' },
-    { id: 'macroAmp', key: 'macroAmp' },
-    { id: 'microScale', key: 'microScale' },
-    { id: 'microAmp', key: 'microAmp' },
-    { id: 'edgeThickMax', key: 'edgeThickMax' },
-    { id: 'edgeThickMin', key: 'edgeThickMin' }
-  ];
 
-  bindings.forEach(b => {
-    let slider = document.getElementById(`slider-${b.id}`);
-    let output = document.getElementById(`val-${b.id}`);
-    
-    slider.addEventListener('input', (e) => {
-      let val = parseFloat(e.target.value);
-      physicsParams[b.key] = val;
-      output.innerText = val;
-      if (viz1 && viz1.cooling < 0.1) viz1.cooling = 0.15;
-      if (viz2 && viz2.cooling < 0.1) viz2.cooling = 0.15;
-    });
-  });
-
-  // Color Pickers Real-Time Listeners
-  document.getElementById('picker-m1Edge').addEventListener('input', (e) => {
-    M1_EDGE_COLOR = e.target.value;
-    c_m1Edge = color(M1_EDGE_COLOR);
-  });
-  document.getElementById('picker-m2Edge').addEventListener('input', (e) => {
-    M2_EDGE_COLOR = e.target.value;
-    c_m2Edge = color(M2_EDGE_COLOR);
-  });
-  document.getElementById('picker-m1Dot').addEventListener('input', (e) => {
-    M1_DOT_COLOR = e.target.value;
-    c_m1Dot = color(M1_DOT_COLOR);
-  });
-  document.getElementById('picker-m1Word').addEventListener('input', (e) => {
-    M1_WORD_COLOR = e.target.value;
-    c_m1Word = color(M1_WORD_COLOR);
-  });
-  document.getElementById('picker-boxBg').addEventListener('input', (e) => {
-    BOX_BG_COLOR = e.target.value;
-    c_boxBg = color(BOX_BG_COLOR);
-  });
-
-  document.getElementById('btn-reset-cooling').addEventListener('click', () => {
-    if (viz1) viz1.cooling = 1.0;
-    if (viz2) viz2.cooling = 1.0;
-  });
-}
-
-function applyStyleScheme() {
-  c_background = color(BG_COLOR);
-  c_m1Edge = color(M1_EDGE_COLOR);
-  c_m2Edge = color(M2_EDGE_COLOR);
-  c_m1Dot = color(M1_DOT_COLOR);
-  c_m1Word = color(M1_WORD_COLOR);
-  c_boxBg = color(BOX_BG_COLOR);
-  document.body.style.backgroundColor = BG_COLOR;
-}
+// =========================================================================
+// --- p5 LIFECYCLE & CORE ENGINE ---
+// =========================================================================
 
 function preload() {
-  table = loadTable('dataset_pred_labeled_21703_objects.csv', 'csv', 'header', 
+  table = loadTable('../dataset_pred_labeled_21703.csv', 'csv', 'header', 
     () => {}, 
     () => {
       table = new p5.Table();
@@ -293,12 +347,20 @@ function preload() {
       let r2 = table.addRow(); r2.setString('index', 'Eu sonhei que caía de um prédio mas acordei antes'); r2.setString('pred', '1'); r2.setString('label1', 'Voar'); r2.setString('label1_full', 'Cair, Janela');
     }
   );
-  fontBold = loadFont('font/RedHatText-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
-  fontRegular = loadFont('font/RedHatText-Regular.ttf', () => {}, () => fontRegular = 'sans-serif');
+  fontBold = loadFont('../font/suse/SUSEMono-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
+  fontRegular = loadFont('../font/suse/SUSEMono-regular.ttf', () => {}, () => fontRegular = 'sans-serif');
+  fontMedium = loadFont('../font/suse/SUSEMono-Medium.ttf', () => {}, () => fontRegular = 'sans-serif');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  // Make canvas 10% smaller than actual screen width
+  let canvas = createCanvas(windowWidth * 0.9, windowHeight); 
+  canvas.parent('sketch-container'); 
+  
+  // Center the canvas horizontally
+  canvas.style('display', 'block');
+  canvas.style('margin', '0 auto');
+  
   applyStyleScheme();
   setupUIEventListeners();
   
@@ -319,124 +381,328 @@ function setup() {
 
   if (themesID.length > 0) {
     viz1 = new ThemeVisualizer(0, 0, width, height);
+    windowResized();
     viz1.setRandomTheme();
   }
+
+  lastUpdateTime = millis();
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  // Resize to 90% of the new window width
+  resizeCanvas(windowWidth * 0.9, windowHeight);
+  let availableWidth = uiVisible ? width - 330 : width;
+
+  // Dynamically update margins to 20% of the CANVAS width
+  MARGIN_LEFT = width * 0.20;
+  MARGIN_RIGHT = width * 0.20;
+
   if (isSplitScreen && viz1 && viz2) {
-    viz1.resize(0, 0, width / 2, height);
-    viz2.resize(width / 2, 0, width / 2, height);
+    viz1.resize(0, 0, availableWidth / 2, height);
+    viz2.resize(availableWidth / 2, 0, availableWidth / 2, height);
   } else if (viz1) {
-    viz1.resize(0, 0, width, height);
+    viz1.resize(0, 0, availableWidth, height);
   }
 }
 
 function draw() {
   background(c_background); 
+  let availableWidth = uiVisible ? width - 330 : width;
+
   if (viz1) viz1.draw();
   if (isSplitScreen && viz2) {
     viz2.draw();
-    push(); stroke(200); strokeWeight(2); line(width / 2, 0, width / 2, height); pop();
+    push(); stroke(200); strokeWeight(2); line(availableWidth / 2, 0, availableWidth / 2, height); pop();
   }
+  
+  let elapsed = millis() - lastUpdateTime;
+  if (elapsed >= UPDATE_INTERVAL) {
+    if (viz1) viz1.setRandomTheme();
+    lastUpdateTime = millis(); elapsed = 0; 
+  }
+
+  push();
+  noStroke(); fill('#525252'); rectMode(CORNER);
+  let barWidth = map(elapsed, 0, UPDATE_INTERVAL, availableWidth, 0);
+  rect(0, 0, barWidth, 5);
+  pop();
+
+  drawDreamInfo();
 }
 
 function keyPressed() {
   if (key === 'm' || key === 'M') {
     if (viz1) viz1.setRandomTheme();
+    lastUpdateTime = millis(); 
+  }
+  if (key === 'q' || key === 'Q') {
+    toggleUI();
   }
 }
 
-function getWordsFromString(str) {
-  let raw = str ? str.toLowerCase() : "";
-  return raw.match(/[\wà-ú]+/g) || [];
+
+// =========================================================================
+// --- UI & CONFIGURATION LOGIC ---
+// =========================================================================
+
+function setupUIEventListeners() {
+  const physBindings = [
+    { id: 'repBase', key: 'repBase' },
+    { id: 'repNode', key: 'repNode' },
+    { id: 'restLen', key: 'restLen' },
+    { id: 'springK', key: 'springK' },
+    { id: 'maxSpeed', key: 'maxSpeed' },
+    { id: 'repDistMult', key: 'repDistMult' },
+    { id: 'segments', key: 'segments' },
+    { id: 'macroScale', key: 'macroScale' },
+    { id: 'macroAmp', key: 'macroAmp' },
+    { id: 'microScale', key: 'microScale' },
+    { id: 'microAmp', key: 'microAmp' },
+    { id: 'edgeThickMax', key: 'edgeThickMax' },
+    { id: 'edgeThickMin', key: 'edgeThickMin' },
+    { id: 'curveTension', key: 'curveTension' },
+    { id: 'specialCurveTension', key: 'specialCurveTension' }
+  ];
+
+  physBindings.forEach(b => {
+    let slider = document.getElementById(`slider-${b.id}`);
+    let output = document.getElementById(`val-${b.id}`);
+    if(slider && output) {
+      slider.addEventListener('input', (e) => {
+        let val = parseFloat(e.target.value);
+        physicsParams[b.key] = val;
+        output.innerText = val;
+        if (viz1 && viz1.cooling < 0.1) viz1.cooling = 0.15;
+        if (viz2 && viz2.cooling < 0.1) viz2.cooling = 0.15;
+      });
+    }
+  });
+
+  const boxBindings = [
+    { id: 'boxStrokeWt', key: 'strokeWeight' },
+    { id: 'boxOffsetX', key: 'offsetX' },
+    { id: 'boxOffsetY', key: 'offsetY' },
+    { id: 'boxPadX', key: 'padX' },
+    { id: 'boxPadY', key: 'padY' }
+  ];
+
+  boxBindings.forEach(b => {
+    let slider = document.getElementById(`slider-${b.id}`);
+    let output = document.getElementById(`val-${b.id}`);
+    if(slider) {
+      slider.addEventListener('input', (e) => {
+        let val = parseFloat(e.target.value);
+        boxParams[b.key] = val;
+        if(output) output.innerText = val;
+      });
+    }
+  });
+
+  let pickerM1Edge = document.getElementById('picker-m1Edge');
+  if(pickerM1Edge) pickerM1Edge.addEventListener('input', (e) => { M1_EDGE_COLOR = e.target.value; c_m1Edge = color(M1_EDGE_COLOR); });
+  
+  let pickerM2Edge = document.getElementById('picker-m2Edge');
+  if(pickerM2Edge) pickerM2Edge.addEventListener('input', (e) => { M2_EDGE_COLOR = e.target.value; c_m2Edge = color(M2_EDGE_COLOR); });
+  
+  let btnReset = document.getElementById('btn-reset-cooling');
+  if (btnReset) btnReset.addEventListener('click', () => { if (viz1) viz1.cooling = 1.0; });
 }
+
+function applyStyleScheme() {
+  c_background = color(BG_COLOR); c_m1Edge = color(M1_EDGE_COLOR); c_m2Edge = color(M2_EDGE_COLOR);
+  c_m1Dot = color(M1_DOT_COLOR); c_m1Word = color(M1_WORD_COLOR); c_boxBg = color(BOX_BG_COLOR); c_boxOutline = color(BOX_OUTLINE_COLOR);
+}
+
+function toggleUI() {
+  uiVisible = !uiVisible;
+  const panel = document.getElementById('control-panel');
+  if (panel) panel.style.display = uiVisible ? 'block' : 'none';
+  windowResized(); 
+}
+
+
+// =========================================================================
+// --- MATH & UTILITIES ---
+// =========================================================================
+
+function getWordsFromString(str) {
+  let raw = str ? str : "";
+  return raw.match(/[a-zA-ZÀ-ÿ0-9_]+/g) || [];
+}
+
+function normalizeWord(w) {
+  return w.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function getClosestPointOnSegment(px, py, x1, y1, x2, y2) {
+  let dx = x2 - x1; let dy = y2 - y1; let lengthSquared = dx * dx + dy * dy;
+  if (lengthSquared === 0) return { x: x1, y: y1 };
+  let t = constrain(((px - x1) * dx + (py - y1) * dy) / lengthSquared, 0, 1);
+  return { x: x1 + t * dx, y: y1 + t * dy };
+}
+function generateRandomDate() { return `${floor(random(17, 20)).toString().padStart(2, '0')}/05/2023 ${floor(random(0, 24)).toString().padStart(2, '0')}:${floor(random(0, 60)).toString().padStart(2, '0')}:00`; }
+function generateRandomAuth() { return Math.random().toString(36).substr(2, 9); }
+function generateRandomCode() { return floor(random(1, 20001)).toString(); }
+
+// =========================================================================
+// --- CLASSES ---
+// =========================================================================
 
 class ThemeVisualizer {
   constructor(offsetX, offsetY, w, h) {
     this.offsetX = offsetX; this.offsetY = offsetY; this.w = w; this.h = h;
-    this.nodes = {}; this.edges = [];
-    this.selectedThemeIDIndex = 0; this.selectedThemeID = null;
-    this.selectedTheme = ""; this.selectedWordsTheme = []; this.selectedThemeDreams = [];
-    this.totalObjectsCount = 0; this.cooling = 1.0;
+    this.nodes = {}; this.edges = []; this.dreamPaths = [];
+    this.selectedThemeIDIndex = 0; this.selectedThemeID = null; this.cooling = 1.0;
+    this.highlightWords = []; 
   }
   
-  resize(offsetX, offsetY, w, h) {
-    this.offsetX = offsetX; this.offsetY = offsetY; this.w = w; this.h = h;
-  }
+  resize(offsetX, offsetY, w, h) { this.offsetX = offsetX; this.offsetY = offsetY; this.w = w; this.h = h; }
   
-  setRandomTheme() {
+setRandomTheme(attempts = 0) {
     if (themesID.length > 0) {
+      // Safety net: stop trying if we fail 50 times to prevent infinite loops freezing the browser
+      if (attempts > 50) {
+        console.warn("Could not find a theme with at least 2 valid dreams after 50 tries.");
+        return; 
+      }
       this.selectedThemeIDIndex = floor(random(themesID.length));
-      this.updateThemeData();
+      this.updateThemeData(attempts);
     }
   }
   
-  updateThemeData() {
+updateThemeData() {
     let themeRows = csvData.filter(r => r.pred === themesID[this.selectedThemeIDIndex]);
-    if (themeRows.length > 0) {
-      this.selectedThemeID = themesID[this.selectedThemeIDIndex];
-      this.selectedTheme = themeRows[0].label1;
-      this.selectedWordsTheme = [...new Set(themeRows.map(r => r.label1_full))];
-      this.totalObjectsCount = themeRows.length;
-      let rawDreams = themeRows.map(r => r.index);
+    
+    let validRows = themeRows.filter(r => r.index && r.index.trim() !== "");
+
+    if (validRows.length > 0) {
       
-      if (rawDreams.length >= 2) {
-        this.selectedThemeDreams = [];
-        let tempArr = [...rawDreams];
-        for (let i = 0; i < 2; i++) {
-          this.selectedThemeDreams.push(tempArr.splice(floor(random(tempArr.length)), 1)[0]);
-        }
+      let chosenRows = [];
+      if (validRows.length >= 2) {
+        chosenRows.push(validRows.splice(floor(random(validRows.length)), 1)[0]);
+        chosenRows.push(validRows.splice(floor(random(validRows.length)), 1)[0]);
       } else {
-        this.selectedThemeDreams = rawDreams;
+        chosenRows = validRows;
       }
+      
+      this.selectedThemeDreams = chosenRows.map(r => r.index);
+      
+      this.highlightWords = [];
+      chosenRows.forEach(r => {
+        let hWords = getWordsFromString(r.label1_full);
+        this.highlightWords.push(...hWords.map(normalizeWord));
+      });
+      
+      codigoSonho1 = generateRandomCode(); autorSonho1 = generateRandomAuth(); datahoraSonho1 = generateRandomDate();
+      codigoSonho2 = generateRandomCode(); autorSonho2 = generateRandomAuth(); datahoraSonho2 = generateRandomDate();
       this.generateGraph();
       this.cooling = 1.0;
+      
+    } else {
+      this.setRandomTheme();
+    }
+  }
+
+  updateThemeData(attempts = 0) {
+    let themeRows = csvData.filter(r => r.pred === themesID[this.selectedThemeIDIndex]);
+    
+    // 1. Ensure the row has a valid string index
+    let validRows = themeRows.filter(r => r.index && typeof r.index === 'string' && r.index.trim() !== "");
+
+    // 2. We STRICTLY require at least 2 valid rows to prevent undefined in selectedThemeDreams[1]
+    if (validRows.length >= 2) {
+      
+      let chosenRows = [];
+      chosenRows.push(validRows.splice(floor(random(validRows.length)), 1)[0]);
+      chosenRows.push(validRows.splice(floor(random(validRows.length)), 1)[0]);
+      
+      this.selectedThemeDreams = chosenRows.map(r => r.index);
+      
+      // 3. VERIFICATION MECHANISM: Ensure neither [0] nor [1] are undefined or empty strings
+      if (!this.selectedThemeDreams[0] || this.selectedThemeDreams[0].trim() === "" ||
+          !this.selectedThemeDreams[1] || this.selectedThemeDreams[1].trim() === "") {
+          
+          // If the verification fails, pick a different theme immediately
+          this.setRandomTheme(attempts + 1);
+          return;
+      }
+
+      // If it passes the check, proceed normally with building the graph
+      this.highlightWords = [];
+      chosenRows.forEach(r => {
+        let hWords = getWordsFromString(r.label1_full);
+        this.highlightWords.push(...hWords.map(normalizeWord));
+      });
+      
+      codigoSonho1 = generateRandomCode(); autorSonho1 = generateRandomAuth(); datahoraSonho1 = generateRandomDate();
+      codigoSonho2 = generateRandomCode(); autorSonho2 = generateRandomAuth(); datahoraSonho2 = generateRandomDate();
+      
+      this.generateGraph();
+      this.cooling = 1.0;
+      
+    } else {
+      // If we don't have at least 2 valid dreams in this theme, pick another theme entirely
+      this.setRandomTheme(attempts + 1);
     }
   }
   
   generateGraph() {
-    this.nodes = {}; this.edges = []; let edgeMap = {};
-  
+    this.nodes = {}; this.edges = []; this.dreamPaths = []; let edgeMap = {};
+
     for (let objIdx = 0; objIdx < this.selectedThemeDreams.length; objIdx++) {
       let words = getWordsFromString(this.selectedThemeDreams[objIdx]);
       if (!words || words.length === 0) continue;
-      let sideCenterX = (objIdx === 0) ? this.w * 0.25 : this.w * 0.75;
+      
+      let sideStartX = MARGIN_LEFT + 20; let sideEndX = this.w - MARGIN_RIGHT - 20;
+      let idealY = (objIdx === 0) ? lerp(MARGIN_TOP, this.h - MARGIN_BOTTOM, 0.25) : lerp(MARGIN_TOP, this.h - MARGIN_BOTTOM, 0.75);
+      
+      let pathNodes = []; 
       
       for (let i = 0; i < words.length; i++) {
-        let word = words[i];
-        let nodeLookupKey = (word === 'sonhei' || word === 'que') ? word + "_" + objIdx : word;
+        let word = words[i]; 
+        let normWord = normalizeWord(word); 
+        let lowerWord = word.toLowerCase(); 
+        
+        let nodeLookupKey = (lowerWord === 'sonhei' || lowerWord === 'que') ? lowerWord + "_" + objIdx : lowerWord;
+        let isFirstWord = (i === 0);
+        let idealX = (words.length > 1) ? map(i, 0, words.length - 1, sideStartX, sideEndX) : (sideStartX + sideEndX) / 2;
 
         if (!this.nodes[nodeLookupKey]) {
-          let startX = sideCenterX + random(-30, 30);
-          let startY = this.h / 2 + map(i, 0, words.length, -120, 120);
-          this.nodes[nodeLookupKey] = new Node(word, startX, startY);
-        }
-        this.nodes[nodeLookupKey].connections++;
+          let isHighlighted = this.highlightWords.includes(normWord);
+          this.nodes[nodeLookupKey] = new Node(word, idealX, idealY, isHighlighted);
+          
+          this.nodes[nodeLookupKey].sumIdealX = 0; this.nodes[nodeLookupKey].countIdealX = 0;
+          this.nodes[nodeLookupKey].sumIdealY = 0; this.nodes[nodeLookupKey].countIdealY = 0;
+          this.nodes[nodeLookupKey].isRoot = isFirstWord; 
+        } else if (isFirstWord) { this.nodes[nodeLookupKey].isRoot = true; }
         
+        let n = this.nodes[nodeLookupKey];
+        n.connections++; n.sumIdealX += idealX; n.countIdealX++; n.sumIdealY += idealY; n.countIdealY++;
+        pathNodes.push(n);
+
         if (i < words.length - 1) {
           let nextWord = words[i + 1];
-          let nextNodeLookupKey = (nextWord === 'sonhei' || nextWord === 'que') ? nextWord + "_" + objIdx : nextWord;
-          let edgeKey = nodeLookupKey + "->" + nextNodeLookupKey;
-          let totalEdges = words.length - 1;
+          let nextLower = nextWord.toLowerCase();
+          let nextNodeLookupKey = (nextLower === 'sonhei' || nextLower === 'que') ? nextLower + "_" + objIdx : nextLower;
+          let edgeKey = nodeLookupKey + "->" + nextNodeLookupKey + "_Dream" + objIdx; 
           
-          if (!edgeMap[edgeKey]) {
-            edgeMap[edgeKey] = { source: nodeLookupKey, target: nextNodeLookupKey, weight: 1, steps: [i], totals: [totalEdges], ownerObjIdx: objIdx };
-          } else {
-            edgeMap[edgeKey].weight++; edgeMap[edgeKey].steps.push(i); edgeMap[edgeKey].totals.push(totalEdges);
-          }
+          if (!edgeMap[edgeKey]) edgeMap[edgeKey] = { source: nodeLookupKey, target: nextNodeLookupKey, weight: 1, ownerObjIdx: objIdx };
+          else edgeMap[edgeKey].weight++;
         }
+      }
+      
+      if (pathNodes.length > 1) {
+        this.dreamPaths.push({ nodes: pathNodes, ownerObjIdx: objIdx });
       }
     }
     
-    for (let key in edgeMap) {
+    for (let key in this.nodes) {
+      let n = this.nodes[key]; n.targetX = n.sumIdealX / n.countIdealX; n.targetY = n.sumIdealY / n.countIdealY;
+    }
+    
+    for (let key in edgeMap) { 
       let e = edgeMap[key];
-      let sumStep = e.steps.reduce((a, b) => a + b, 0);
-      this.edges.push({ 
-        source: this.nodes[e.source], target: this.nodes[e.target], weight: e.weight, 
-        avgStep: sumStep / e.steps.length, avgTotal: e.totals[0], ownerObjIdx: e.ownerObjIdx 
-      });
+      this.edges.push({ source: this.nodes[e.source], target: this.nodes[e.target], weight: e.weight, ownerObjIdx: e.ownerObjIdx });
     }
   }
   
@@ -454,8 +720,7 @@ class ThemeVisualizer {
         let dx = n1.x - n2.x; let dy = n1.y - n2.y; let d = dist(n1.x, n1.y, n2.x, n2.y);
         if (d > 0 && d < maxRepulsionDist) {
           let force = repForceMult / (d * d + 40);
-          n1.vx += (dx / d) * force; n1.vy += (dy / d) * force;
-          n2.vx -= (dx / d) * force; n2.vy -= (dy / d) * force;
+          n1.vx += (dx / d) * force; n1.vy += (dy / d) * force; n2.vx -= (dx / d) * force; n2.vy -= (dy / d) * force;
         }
       }
     }
@@ -465,23 +730,103 @@ class ThemeVisualizer {
       let d = dist(edge.source.x, edge.source.y, edge.target.x, edge.target.y);
       if (d > 0) {
         let force = (d - physicsParams.restLen) * physicsParams.springK;
-        edge.source.vx += (dx / d) * force; edge.source.vy += (dy / d) * force;
-        edge.target.vx -= (dx / d) * force; edge.target.vy -= (dy / d) * force;
+        edge.source.vy += (dy / d) * force; edge.target.vy -= (dy / d) * force;
+        edge.source.vx += (dx / d) * (force * 0.2); edge.target.vx -= (dx / d) * (force * 0.2);
       }
     }
     
     for (let n of nodeArray) {
-      n.vy += (this.h / 2 - n.y) * 0.01; 
+      n.vx += (n.targetX - n.x) * 0.08; n.vy += (n.targetY - n.y) * (n.isRoot ? 0.25 : 0.04);
       n.vx = constrain(n.vx, -physicsParams.maxSpeed, physicsParams.maxSpeed);
       n.vy = constrain(n.vy, -physicsParams.maxSpeed, physicsParams.maxSpeed);
-      n.x += n.vx * this.cooling; n.y += n.vy * this.cooling;
-      n.vx *= 0.72; n.vy *= 0.72;
+      n.x += n.vx * this.cooling; n.y += n.vy * this.cooling; n.vx *= 0.72; n.vy *= 0.72;
       
-      if (n.x < NETWORK_SCREEN_MARGIN) { n.x = NETWORK_SCREEN_MARGIN; n.vx *= -0.2; }
-      if (n.x > this.w - NETWORK_SCREEN_MARGIN) { n.x = this.w - NETWORK_SCREEN_MARGIN; n.vx *= -0.2; }
-      if (n.y < NETWORK_SCREEN_MARGIN) { n.y = NETWORK_SCREEN_MARGIN; n.vy *= -0.2; }
-      if (n.y > this.h - NETWORK_SCREEN_MARGIN) { n.h = this.h - NETWORK_SCREEN_MARGIN; n.vy *= -0.2; }
+      if (n.x < MARGIN_LEFT) { n.x = MARGIN_LEFT; n.vx *= -0.2; }
+      if (n.x > this.w - MARGIN_RIGHT) { n.x = this.w - MARGIN_RIGHT; n.vx *= -0.2; }
+      if (n.y < MARGIN_TOP) { n.y = MARGIN_TOP; n.vy *= -0.2; }
+      if (n.y > this.h - MARGIN_BOTTOM) { n.y = this.h - MARGIN_BOTTOM; n.vy *= -0.2; }
     }
+
+    for (let i = 0; i < nodeArray.length; i++) {
+      let n1 = nodeArray[i];
+      
+      let dx = n1.x - n1.labelX;
+      let dy = n1.y - n1.labelY;
+      let d = dist(n1.x, n1.y, n1.labelX, n1.labelY);
+      let idealDist = 20; 
+      if (d > 0) {
+        let force = (d - idealDist) * 0.25; 
+        if (d > 45) force += (d - 45) * 0.5; 
+        n1.labelVx += (dx / d) * force;
+        n1.labelVy += (dy / d) * force;
+      }
+      
+      for (let j = i + 1; j < nodeArray.length; j++) {
+        let n2 = nodeArray[j];
+        let ldx = n1.labelX - n2.labelX;
+        let ldy = n1.labelY - n2.labelY;
+        let ld = dist(n1.labelX, n1.labelY, n2.labelX, n2.labelY);
+        let r1 = (n1.boxW || 60) / 2; 
+        let r2 = (n2.boxW || 60) / 2;
+        let minLD = r1 + r2 + 15; 
+        
+        if (ld > 0 && ld < minLD) {
+          let lForce = (minLD - ld) * 0.35;
+          n1.labelVx += (ldx / ld) * lForce;
+          n1.labelVy += (ldy / ld) * lForce;
+          n2.labelVx -= (ldx / ld) * lForce;
+          n2.labelVy -= (ldy / ld) * lForce;
+        }
+      }
+      
+      for (let j = 0; j < nodeArray.length; j++) {
+        if (i === j) continue; 
+        let n2 = nodeArray[j];
+        let ddx = n1.labelX - n2.x;
+        let ddy = n1.labelY - n2.y;
+        let dd = dist(n1.labelX, n1.labelY, n2.x, n2.y);
+        let minDD = ((n1.boxW || 60) / 2) + 20; 
+        
+        if (dd > 0 && dd < minDD) {
+          let dForce = (minDD - dd) * 0.3;
+          n1.labelVx += (ddx / dd) * dForce;
+          n1.labelVy += (ddy / dd) * dForce;
+        }
+      }
+
+      for (let edge of this.edges) {
+        let closest = getClosestPointOnSegment(
+          n1.labelX, n1.labelY, 
+          edge.source.x, edge.source.y, 
+          edge.target.x, edge.target.y
+        );
+        let edx = n1.labelX - closest.x;
+        let edy = n1.labelY - closest.y;
+        let ed = dist(n1.labelX, n1.labelY, closest.x, closest.y);
+        
+        let edgeThickness = physicsParams.edgeThickMax || 20;
+        let safeDistance = ((n1.boxW || 60) / 2) + edgeThickness + 10; 
+        
+        if (ed > 0 && ed < safeDistance) {
+          let eForce = (safeDistance - ed) * 0.4; 
+          n1.labelVx += (edx / ed) * eForce;
+          n1.labelVy += (edy / ed) * eForce;
+        }
+      }
+    }
+
+    for (let n of nodeArray) {
+      n.labelX += n.labelVx * this.cooling;
+      n.labelY += n.labelVy * this.cooling;
+      n.labelVx *= 0.55; 
+      n.labelVy *= 0.55;
+
+      if (n.labelX < MARGIN_LEFT) { n.labelX = MARGIN_LEFT; n.labelVx *= -0.2; }
+      if (n.labelX > this.w - MARGIN_RIGHT) { n.labelX = this.w - MARGIN_RIGHT; n.labelVx *= -0.2; }
+      if (n.labelY < MARGIN_TOP) { n.labelY = MARGIN_TOP; n.labelVy *= -0.2; }
+      if (n.labelY > this.h - MARGIN_BOTTOM) { n.labelY = this.h - MARGIN_BOTTOM; n.labelVy *= -0.2; }
+    }
+    
     this.cooling *= 0.985;
   }
 
@@ -491,113 +836,263 @@ class ThemeVisualizer {
     
     this.updatePhysics();
     
-    for (let edge of this.edges) {
-      drawStaticEdge(edge.source, edge.target, (edge.ownerObjIdx === 1) ? 2 : 1, edge.avgStep, edge.avgTotal);
+    for (let path of this.dreamPaths) {
+      let nodes = path.nodes; 
+      let numEdges = nodes.length - 1;
+      path.edgeTensions = new Array(numEdges).fill(physicsParams.curveTension);
+      
+      for (let i = 0; i < nodes.length; i++) {
+        let wordA = normalizeWord(nodes[i].word);
+        
+        for (let d = 2; d <= 5; d++) {
+          if (i + d < nodes.length && normalizeWord(nodes[i + d].word) === wordA) {
+            
+            for (let j = 0; j < d; j++) {
+              path.edgeTensions[i + j] = physicsParams.specialCurveTension;
+            }
+            
+          }
+        }
+      }
     }
-    for (let key in this.nodes) { this.nodes[key].display(); }
-    this.drawHUD();
+
+    for (let path of this.dreamPaths) {
+      let nodes = path.nodes; let numEdges = nodes.length - 1;
+      for (let i = 0; i < numEdges; i++) {
+        let nStart = nodes[i]; let nEnd = nodes[i+1];
+        let nPrev = (i === 0) ? { x: nStart.x - (nEnd.x - nStart.x), y: nStart.y - (nEnd.y - nStart.y) } : nodes[i-1];
+        let nNext = (i+1 === numEdges) ? { x: nEnd.x + (nEnd.x - nStart.x), y: nEnd.y + (nEnd.y - nStart.y) } : nodes[i+2];
+        drawCurveSegment(nPrev, nStart, nEnd, nNext, (path.ownerObjIdx === 1) ? 2 : 1, i, numEdges, false, path.edgeTensions[i]);
+      }
+    }
     
+    for (let path of this.dreamPaths) {
+      let nodes = path.nodes; let numEdges = nodes.length - 1;
+      for (let i = 0; i < numEdges; i++) {
+        let nStart = nodes[i]; let nEnd = nodes[i+1];
+        let nPrev = (i === 0) ? { x: nStart.x - (nEnd.x - nStart.x), y: nStart.y - (nEnd.y - nStart.y) } : nodes[i-1];
+        let nNext = (i+1 === numEdges) ? { x: nEnd.x + (nEnd.x - nStart.x), y: nEnd.y + (nEnd.y - nStart.y) } : nodes[i+2];
+        drawCurveSegment(nPrev, nStart, nEnd, nNext, (path.ownerObjIdx === 1) ? 2 : 1, i, numEdges, true, path.edgeTensions[i]);
+      }
+    }
+    
+    for (let key in this.nodes) { this.nodes[key].display(); }    
     drawingContext.restore(); pop();
   }
-
-  drawHUD() {
-    push(); textAlign(LEFT, TOP); noStroke();
-    textFont(fontRegular); textSize(14); fill('#535353');
-    text("Exibindo", UI_PADDING, UI_PADDING);
-    fill('#000000');
-    text(this.totalObjectsCount + " sonhos (Comparando 2)", UI_PADDING + textWidth("Exibindo "), UI_PADDING);
-    pop();
-  }
-}
-
-function drawStaticEdge(source, target, styleMode, highlightStep, totalHighlightEdges) {
-  let distance = dist(source.x, source.y, target.x, target.y);
-  if (distance < 3) return;
-  
-  let thickness = (totalHighlightEdges > 1) 
-    ? map(highlightStep, 0, totalHighlightEdges - 1, physicsParams.edgeThickMax, physicsParams.edgeThickMin) 
-    : physicsParams.edgeThickMax;
-
-  let activeColor = (styleMode === 2) ? c_m2Edge : c_m1Edge;
-
-  push();
-  noFill();
-  strokeCap(ROUND);
-  strokeJoin(ROUND);    
-  
-  let segs = physicsParams.segments;
-  let pointsList = [];
-  
-  let angleNormal = atan2(target.y - source.y, target.x - source.x);
-  
-  for (let i = 0; i <= segs; i++) {
-    let t = i / segs;
-    let bx = lerp(source.x, target.x, t);
-    let by = lerp(source.y, target.y, t);
-    
-    if (i > 0 && i < segs) {
-      let macroNoise = noise(bx * physicsParams.macroScale, by * physicsParams.macroScale, 11.2);
-      let macroOffset = map(macroNoise, 0, 1, -distance * physicsParams.macroAmp, distance * physicsParams.macroAmp);
-      
-      let microNoise = noise(bx * physicsParams.microScale, by * physicsParams.microScale, 84.7);
-      let microOffset = map(microNoise, 0, 1, -physicsParams.microAmp, physicsParams.microAmp);
-      
-      let finalOffset = macroOffset + microOffset;
-      bx += cos(angleNormal + HALF_PI) * finalOffset;
-      by += sin(angleNormal + HALF_PI) * finalOffset;
-    }
-    pointsList.push({ x: bx, y: by });
-  }
-  
-  // Baseline stroke using active interface color state
-  strokeWeight(thickness);
-  stroke(red(activeColor), green(activeColor), blue(activeColor), 255);
-  beginShape();
-  if (pointsList.length > 0) {
-    curveVertex(pointsList[0].x, pointsList[0].y);
-    for (let pt of pointsList) { curveVertex(pt.x, pt.y); }
-    curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y);
-  }
-  endShape();
-  
-  // Stamp texture bleed layer
-  strokeWeight(thickness * 0.85);
-  stroke(red(activeColor), green(activeColor), blue(activeColor), 120);
-  beginShape();
-  if (pointsList.length > 0) {
-    curveVertex(pointsList[0].x, pointsList[0].y);
-    for (let pt of pointsList) { 
-      let fuzz = random(-0.6, 0.6);
-      curveVertex(pt.x + fuzz, pt.y + fuzz); 
-    }
-    curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y);
-  }
-  endShape();
-  
-  pop();
 }
 
 class Node {
-  constructor(word, x, y) {
-    this.word = word; this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.connections = 0; 
+  constructor(word, x, y, isHighlighted = false) {
+    this.word = word; this.x = x; this.y = y; this.vx = 0; this.vy = 0;
+    this.labelX = x + random(-20, 20); this.labelY = y + random(-20, 20);
+    this.labelVx = 0; this.labelVy = 0; this.boxW = 60; this.connections = 0;
+    this.isHighlighted = isHighlighted; 
   }
   
   display() {
-    push(); translate(this.x, this.y); noStroke(); fill(c_m1Dot); 
-    if (DEFAULT_M1_DOT_RADIUS_VAL > 0) circle(0, 0, DEFAULT_M1_DOT_RADIUS_VAL * 2);
+    push();
     
-    textFont(fontBold); textSize(DEFAULT_M1_WORD_SIZE_VAL); textAlign(LEFT, CENTER);
-    let txtWidth = textWidth(this.word);
-    let boxX = DEFAULT_M1_DOT_RADIUS_VAL + 4;
-    let boxY = -DEFAULT_M1_WORD_SIZE_VAL / 2;
+    let currentBgColor = this.isHighlighted ? color('#538AFC') : c_boxBg;
+    let currentTextColor = this.isHighlighted ? color('#ffffff') : c_m1Word;
     
-    // Custom label box color and text color applied dynamically
-    stroke(0, 25); strokeWeight(1); fill(c_boxBg); 
-    rect(boxX - BOX_PADDING_X, boxY - BOX_PADDING_Y, txtWidth + (BOX_PADDING_X * 2), DEFAULT_M1_WORD_SIZE_VAL + (BOX_PADDING_Y * 2));
-    noStroke(); fill(c_m1Word); text(this.word, boxX, 0);
+    noStroke(); fill(currentBgColor); circle(this.x, this.y, DEFAULT_M1_DOT_RADIUS_VAL * 2);
+    stroke(currentBgColor); strokeWeight(1); line(this.x, this.y, this.labelX, this.labelY);
+    
+    fill(currentBgColor); 
+    if (boxParams.strokeWeight > 0) { stroke(c_boxOutline); strokeWeight(boxParams.strokeWeight); } 
+    else { noStroke(); }
+
+    textFont(fontMedium); textSize(DEFAULT_M1_WORD_SIZE_VAL);
+    let tw = textWidth(this.word); let th = textSize(); 
+    this.boxW = tw + (boxParams.padX * 2); let boxH = th + (boxParams.padY * 2);
+
+    rectMode(CENTER);
+    rect(this.labelX + boxParams.offsetX, this.labelY + boxParams.offsetY, this.boxW, boxH);
+
+    fill(currentTextColor); noStroke(); textAlign(CENTER, CENTER); text(this.word, this.labelX, this.labelY);
     pop();
   }
 }
+
+
+// =========================================================================
+// --- RENDERING (EDGES & HUD) ---
+// =========================================================================
+
+function drawCurveSegment(nPrev, nStart, nEnd, nNext, styleMode, step, totalSteps, isOverlayPass, tension) {
+  let distance = dist(nStart.x, nStart.y, nEnd.x, nEnd.y);
+  if (distance < 3) return;
+  
+  let activeColor = (styleMode === 2) ? c_m2Edge : c_m1Edge;
+
+  push();
+  curveTightness(tension !== undefined ? tension : physicsParams.curveTension);
+  
+  if (!isOverlayPass) {
+    let thickness = (totalSteps > 1) 
+      ? map(step, 0, totalSteps - 1, physicsParams.edgeThickMax, physicsParams.edgeThickMin) 
+      : physicsParams.edgeThickMax;
+
+    noFill(); strokeCap(ROUND); strokeJoin(ROUND);    
+    
+    let segs = physicsParams.segments;
+    let pointsList = [];
+    
+    for (let i = 0; i <= segs; i++) {
+      let t = i / segs;
+      
+      let bx = curvePoint(nPrev.x, nStart.x, nEnd.x, nNext.x, t);
+      let by = curvePoint(nPrev.y, nStart.y, nEnd.y, nNext.y, t);
+      
+      if (i > 0 && i < segs) {
+        let macroNoise = noise(bx * physicsParams.macroScale, by * physicsParams.macroScale, 11.2);
+        let macroOffset = map(macroNoise, 0, 1, -distance * physicsParams.macroAmp, distance * physicsParams.macroAmp);
+        let microNoise = noise(bx * physicsParams.microScale, by * physicsParams.microScale, 84.7);
+        let microOffset = map(microNoise, 0, 1, -physicsParams.microAmp, physicsParams.microAmp);
+        let finalOffset = macroOffset + microOffset;
+        
+        let prevT = (i - 0.1) / segs;
+        let px = curvePoint(nPrev.x, nStart.x, nEnd.x, nNext.x, prevT);
+        let py = curvePoint(nPrev.y, nStart.y, nEnd.y, nNext.y, prevT);
+        let angleNormal = atan2(by - py, bx - px);
+        
+        bx += cos(angleNormal + HALF_PI) * finalOffset;
+        by += sin(angleNormal + HALF_PI) * finalOffset;
+      }
+      pointsList.push({ x: bx, y: by });
+    }
+    
+    strokeWeight(thickness); stroke(red(activeColor), green(activeColor), blue(activeColor), 255);
+    beginShape();
+    if (pointsList.length > 0) {
+      curveVertex(pointsList[0].x, pointsList[0].y); 
+      for (let pt of pointsList) curveVertex(pt.x, pt.y); 
+      curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y); 
+    }
+    endShape();
+    
+    strokeWeight(thickness * 0.85); stroke(red(activeColor), green(activeColor), blue(activeColor), 120);
+    beginShape();
+    if (pointsList.length > 0) {
+      curveVertex(pointsList[0].x, pointsList[0].y);
+      for (let pt of pointsList) { curveVertex(pt.x + random(-0.6, 0.6), pt.y + random(-0.6, 0.6)); }
+      curveVertex(pointsList[pointsList.length - 1].x, pointsList[pointsList.length - 1].y);
+    }
+    endShape();
+    
+  } else {
+    strokeWeight(1);
+    let lighterColor = lerpColor(activeColor, color(255), 0.4);
+    noFill();
+    beginShape();
+    endShape();
+  }
+  pop();
+}
+
+// =========================================================================
+// --- NEW ALIGNED DREAM TEXT FUNCTION ---
+// =========================================================================
+
+function drawDreamInfo() {
+  push();
+  noStroke();
+  
+  const th = 12; 
+  textFont(fontMedium);
+  textSize(th);
+  
+  // Dynamically calculate the center of the available viewing area (respecting UI panel if open)
+  let availableWidth = uiVisible ? width - 330 : width;
+  let centerX = availableWidth / 2;
+
+  // Helper function to draw the text and blue rects for highlighted words
+  function drawTextWithHighlight(txt, bgColor, centerY) {
+    let tw = textWidth(txt);
+    
+    // Draw centered main background rect (Red or Black)
+    rectMode(CENTER);
+    fill(bgColor); 
+    rect(centerX, centerY + 2, tw, th + 1); 
+    
+    // Draw blue rects over the base background for highlighted words
+    if (viz1 && viz1.highlightWords) {
+      let startX = centerX - tw / 2;
+      let searchPos = 0;
+      let words = getWordsFromString(txt);
+      
+      for (let w of words) {
+        let idx = txt.indexOf(w, searchPos);
+        if (idx !== -1) {
+          // If the normalized word matches one of the special 'label1_full' words
+          if (viz1.highlightWords.includes(normalizeWord(w))) {
+            let beforeTxt = txt.substring(0, idx);
+            let wordStartX = startX + textWidth(beforeTxt);
+            let wordW = textWidth(w);
+            
+            // Draw blue rect with the same height and Y-offset as the main background
+            fill('#538AFC'); 
+            rect(wordStartX + wordW / 2, centerY + 2, wordW, th + 1);
+          }
+          // Move search position forward to avoid matching the same word instance twice
+          searchPos = idx + w.length;
+        }
+      }
+    }
+    
+    // Draw centered text on top
+    fill('#FFFFFF'); 
+    textAlign(CENTER, CENTER);
+    text(txt, centerX, centerY);
+  }
+
+  // --- BLOCK 1 (Owner of M1 Edge) - TOP ---
+  if (c_m1Edge && viz1 && viz1.selectedThemeDreams && viz1.selectedThemeDreams[0]) {
+    let txt1 = viz1.selectedThemeDreams[0]; 
+    let centerY1 = MARGIN_TOP / 3;
+    drawTextWithHighlight(txt1, c_m1Edge, centerY1);
+  }
+
+  // --- BLOCK 2 (Owner of M2 Edge) - BOTTOM ---
+  if (c_m2Edge && viz1 && viz1.selectedThemeDreams && viz1.selectedThemeDreams[1]) {
+    let txt2 = viz1.selectedThemeDreams[1]; 
+    let centerY2 = height - (MARGIN_BOTTOM / 3);
+    drawTextWithHighlight(txt2, c_m2Edge, centerY2);
+  }
+  
+  pop();
+}
 </script>
+
+
+<div class="parte-inferior">
+  Como interpretar:
+  <br><br>As imagens são atualizadas automaticamente a cada 30 segundos.<br>Ou pressione "m" no teclado para gerar outra imagem.
+  <div class="imagem">
+      <img src="legenda.png" alt="Legena da visualização" style="width: 600px; height: auto; margin-top: 32px; margin-bottom: 32px"> <br>  
+</div>
+<div class="descricao-estendida">
+  <div class="text-inside">
+        <br><br><br>
+
+    O trabalho aborda sonhos de forma coletiva ao apresentar, juntamente, sonhos de duas pessoas diferentes, mas que compartilham alguma similaridade em seu conteúdo, um tema em comum. É possível, por exemplo, que sejam exibidos dois sonhos sobre viagem, e cada um desses sonhos contém alguma palavra como "viajei", "viajando", "viagem", ou outra palavra similar. A categorização dos sonhos em grupos foi realizada automaticamente através de algoritmos de processamento de linguagem natural, clusterização e com auxílio de inteligência artificial generativa.
+    <br><br><br>
+    Todas os sonhos da base de dados começam com as palavras "sonhei que" e são seguidos pelo restante do relato onírico. Cada palavra é conectada com a próxima, formando uma sequência de elementos que formam um "traço". Cada sonho tem sua própria cor de traço. A medida em que os conteúdos oníricos apresentam palavras em comum, os traços se conectam, formando uma rede própria que representa visualmente o cruzamento entre os dois sonhos. 
+    <br><br><br>
+    O resultado são formas abstratas feito rabiscos, produzidos cegamente, como as imagens produzidas pelo inconsciente, pois são produzidas através de algoritmos que, apesar de serem desenvolvidos para lidar com a linguagem (como os algoritmos de processamento de linguagem natural), não tem capacidade de compreender e interpretar as mesmas. Esses rabiscos se assemelham a petroglifos, que são imagens gravadas em rochas por povos ancestrais. A relação entre sonhos os povos ancestrais é um assunto abordado extensivamente por Sidarta Ribeiro em seu livro O Oráculo da Noite: A história e a ciência do sonho. Em seu livro, Sidarta argumenta que os sonhos tinham um papel importante na sobrevivência dos povos ancestrais, pois através das imagens geradas pelo inconsciência, essas pessoas acessavam alternativas que os auxiliavam a desenvolver novas ferramentas e metodologias para sobreviver no mundo pré-histórico. Ou seja, para os povos ancestrais, os sonhos eram fontes de nova formas e imagens  Ao despertarem, esses sonhadores ancestrais utilizavam essas glifos oníricos em seus desafios diários.
+    <br><br><br>
+    </div>
+      <div class="imagem">
+    <img class="imagem" src="galician-petroglyphs.jpg" alt="Petroglifos Galicianos"> <br> Imagem: Petroglifos registrados na região de Galicia 
+  </div>
+    <div class="text-inside">
+    <br><br><br>
+    A visualização de dados é comumente descrita como uma ferramenta que auxilia na comunicação e compreensão de quantidades massivas de dados e grandes números. É provavel que essa visão quantitativa predomine, pois alguns profissionais notáveis na área da visualização de dados flertam com disciplinas como estatística e economia. Como é o caso de Willian Playfair, que foi um engenheiro e economista político escocês e pioneiro na área de visualização de dados no século XIX. Como também é o caso de Edward Tufte, autor do classico livro The Visual Display of Quantitative Information e atualmente professor emérito de estatística na Universidade de Yale.
+    <br><br><br>
+    O presente trabalho aborda a visualização de dados através uma ótica distinta por não ser quantitativa, mas geométrica. Inspirado em uma teoria de dados descrita pelo psicólogo Clyde H. Coombs em seu livro A Theory of Data (1964), onde argumenta que "dados podem ser vistos como relações entre pontos em um espaço". Essa abordagem geométrica, como é definida pelo próprio autor, deveria servir como base para análise de dados comportamentais na psicologia. 
+  </div>
+</div>
+</div>
+
 </body>
 </html>
