@@ -8,6 +8,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
   
   <style>
+
+    @font-face {
+  font-family: 'Arimo';
+  src: url('Arimo-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
     @font-face {
   font-family: 'ShareTechMono';
   src: url('ShareTechMono-Regular.ttf') format('truetype');
@@ -18,7 +26,7 @@
       margin: 0;
       padding: 0;
       background-color: #121619;
-      font-family: 'Fira Sans', sans-serif;
+      font-family: 'Arimo', sans-serif; /* <-- Updated font family */
     }
     #control-panel {
       display: none; /* Add this line to hide it immediately on load */
