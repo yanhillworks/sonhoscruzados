@@ -35,8 +35,8 @@
       overflow-y: auto;
     }
     .panel-section {
-      font-weight: bold; 
-      font-size: 13px; 
+      -weight: bold; 
+      -size: 13px; 
       margin: 15px 0 8px 0; 
       border-bottom: 1px solid #ddd; 
       padding-bottom: 3px;
@@ -44,14 +44,14 @@
     }
     .subtitulo{
       color:#838383;
-      font-size:14px;
+      -size:14px;
     }
 
     .titulo {
-      font-weight: bold; 
-      font-size: 32px; 
+      -weight: bold; 
+      -size: 32px; 
       line-height: 32px;
-      font-size: 40px;
+      -size: 40px;
     color: #f4f4f4;
     margin-top: 12px;
       
@@ -60,7 +60,7 @@
       margin-bottom: 12px;       /* Pushes the subtitle down a bit */
     }
     .descricao, .descricao-estendida{
-      font-size: 18px;
+      -size: 18px;
     line-height: 28px;
       line-height: 24px;
     }
@@ -94,8 +94,8 @@
     }
     .control-group label {
       display: block;
-      font-size: 11px;
-      font-weight: bold;
+      -size: 11px;
+      -weight: bold;
       color: #333;
       margin-bottom: 2px;
     }
@@ -112,7 +112,7 @@
     }
     .control-group span {
       float: right;
-      font-weight: normal;
+      -weight: normal;
       color: #666;
     }
     .color-row {
@@ -122,8 +122,8 @@
       margin-bottom: 6px;
     }
     .color-row label {
-      font-size: 11px;
-      font-weight: bold;
+      -size: 11px;
+      -weight: bold;
       color: #333;
     }
   </style>
@@ -139,7 +139,7 @@
 </div>
 
 <div id="control-panel">
-  <div style="font-weight:bold; font-size:15px; margin-bottom:5px; text-align:center;">Organic Edge Lab</div>
+  <div style="-weight:bold; -size:15px; margin-bottom:5px; text-align:center;">Organic Edge Lab</div>
   
   <div class="panel-section" style="margin-top:5px;">Network Physics</div>
   <div class="control-group">
@@ -226,7 +226,7 @@
     <input type="color" id="picker-boxBg" value="#FF0000">
   </div>
 
-  <button id="btn-reset-cooling" style="width:100%; margin-top:12px; padding:6px; cursor:pointer; font-weight:bold;">Re-Energize Layout</button>
+  <button id="btn-reset-cooling" style="width:100%; margin-top:12px; padding:6px; cursor:pointer; -weight:bold;">Re-Energize Layout</button>
 <hr>
 <h4>Box Visual Settings</h4>
 
@@ -267,8 +267,8 @@
 
 let table;
 let csvData = [];
-let fontBold;
-let fontRegular;
+let Bold;
+let Regular;
 
 const UI_PADDING = 32; 
 
@@ -347,9 +347,9 @@ function preload() {
       let r2 = table.addRow(); r2.setString('index', 'Eu sonhei que caía de um prédio mas acordei antes'); r2.setString('pred', '1'); r2.setString('label1', 'Voar'); r2.setString('label1_full', 'Cair, Janela');
     }
   );
-  fontBold = loadFont('../font/suse/SUSEMono-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
-  fontRegular = loadFont('../font/suse/SUSEMono-regular.ttf', () => {}, () => fontRegular = 'sans-serif');
-  fontMedium = loadFont('../font/suse/SUSEMono-Medium.ttf', () => {}, () => fontRegular = 'sans-serif');
+  Bold = loadFont('font/suse/SUSEMono-Bold.ttf', () => {}, () => fontBold = 'sans-serif');
+  fontRegular = loadFont('font/suse/SUSEMono-regular.ttf', () => {}, () => fontRegular = 'sans-serif');
+  fontMedium = loadFont('font/suse/SUSEMono-Medium.ttf', () => {}, () => fontRegular = 'sans-serif');
 }
 
 function setup() {
